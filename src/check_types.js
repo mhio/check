@@ -33,7 +33,7 @@ const isInteger = require('lodash/isinteger')
 *
 * A lot of the tests are based on [lodash](https://lodash.com/docs/) methods.
 */
-export const CheckTypes = {
+export const check_types = {
 
   array: {
     args: ['value'],

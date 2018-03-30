@@ -7,7 +7,7 @@ const assign = require('lodash/assign')
 const debugr = require('debug')
 const debug = debugr('mhio:check:Checks')
 
-import { CheckTypes } from './CheckTypes'
+import { check_types } from './check_types'
 import { check_strings } from './check_strings'
 import { check_numbers } from './check_numbers'
 import { check_things } from './check_things'
@@ -23,7 +23,7 @@ import { check_things } from './check_things'
 export class Checks {
 
   static _classInit(){
-    this.all = this.loadChecks(CheckTypes, check_strings, check_numbers, check_things)
+    this.all = this.loadChecks(check_types, check_strings, check_numbers, check_things)
   }
 
   static loadChecks(...classes){
