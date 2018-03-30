@@ -19,5 +19,5 @@ import { Check } from '@mhio/check'
 
 ### Links
 
-- [Github mhio/check](https://github.com/mhio/check)
-- [Npm `@mhio/check`](https://npmjs.org/package/@mhio/check)
+- [Github `mhio/check`](https://github.com/mhio/check)
+- [npm `@mhio/check`](https://npmjs.org/package/@mhio/check)
