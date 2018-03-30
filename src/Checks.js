@@ -29,8 +29,7 @@ export class Checks {
   static loadChecks(...classes){
     let checks = reduce(classes, (acc, cls) => {
       debug('loading cls', cls.name)
-      assign(acc, cls)
-      return acc
+      return assign(acc, cls)
     }, {})
     forEach(checks, (check) => {
       if ( typeof check.message === 'string' ){
