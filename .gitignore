@@ -1,0 +1,12 @@
+node_modules/
+
+# docco
+doc/html
+lib/
+
+# test output + coverage
+test/output
+casserol*.tgz
+
+# logs
+yarn-error.log
