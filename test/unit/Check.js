@@ -1,11 +1,15 @@
 /* global expect */
 
-const { Check, CheckFailed } = require('../../src/Check')
+const { Check, CheckFailed, Exception } = require('../../src/Check')
 
 describe('Check', function(){
 
   it('should load', function(){
     expect( Check ).to.be.ok
+  })
+
+  it('should load', function(){
+    expect( new CheckFailed() ).to.be.an.instanceof( Exception )
   })
 
   it('should generate a check function', function(){
@@ -16,7 +20,7 @@ describe('Check', function(){
     expect( ()=> Check.generate() ).to.throw(/No Check config to generate function/)
   })
 
-  let simple_config, simple_data, two_config, empty_data
+  let simple_config, simple_data, more_config, empty_data
 
   beforeEach(function(){
     simple_config = { 
@@ -24,10 +28,11 @@ describe('Check', function(){
         one: { label: 'One' }
       }
     }
-    two_config = { 
+    more_config = { 
       fields: { 
         one: { label: 'One' },
         two: { label: 'Two', required: false },
+        thr: { label: 'Thr', type: 'string' },
       }
     }
     simple_data = { one: 'Nice' }
@@ -68,4 +73,16 @@ describe('Check', function(){
     expect( fn(empty_data) ).to.eql(empty_data)
   })
 
+  it('should succesfully check a simple field/value', function(){
+    let fn = Check.generate(more_config) 
+    let data = { one: 'won', thr: 'three'}
+    expect( fn ).to.be.a('function')
+    expect( fn(data) ).to.eql(data)
+  })
+
+  it('should succesfully check a simple field/value', function(){
+    let fn = Check.generate(more_config) 
+    let data = { one: 'won', thr: 3 }
+    expect( ()=> fn(data) ).to.throw(/ is not a string/)
+  })
 })

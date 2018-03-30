@@ -226,7 +226,7 @@ export const CheckTypes = {
     },
     //message: '{{name}} must be {{min}} to {{max}}'
     message: (p) => {
-      let msg = `${p.name} has length ${p.value.length}.`
+      let msg = `${p.name} has length ${_size(p.value)}.`
       msg += ( p.min === p.max ) ? ` Must be ${p.min}` : ` Must be ${p.min} to ${p.max}`
       return msg
     },
@@ -255,7 +255,7 @@ export const CheckTypes = {
 
   strinteger: {
     args: ['value'],
-    test: isInteger,
+    test: (value)=> Boolean(/^[0-9]+$/.exec(value)),
     message: '{{name}} must be an integer',
     group: 'string'
   },
@@ -268,7 +268,7 @@ export const CheckTypes = {
   uuid: {
     args: ['string'],
     test: ( string ) => Boolean( 
-      string.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{8}$/i)
+      string.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)
     ),
     message: '{{name}} must match regular expression {{regex}}',
     group: 'string'
@@ -316,6 +316,20 @@ export const CheckTypes = {
     test: (first, second) => Boolean(first) && Boolean(second),
     message: '{{name}} testing ({{value}} && {{second}}) :D',
     group: 'testing'
+  },
+  true: { 
+    args: [],
+    test: () => true,
+    message: 'test true',
+    group: 'testing'
+  },
+  false: { 
+    args: [],
+    test: () => false,
+    message: 'test false',
+    group: 'testing'
   }
+
 }
 
+export { Exception }

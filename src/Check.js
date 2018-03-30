@@ -22,10 +22,6 @@ class Check {
     this.types = CheckTypes
   }
 
-  static typeCheck(type, val){
-
-  }
-
   /** Generates a function to check some data 
   * There's a lot of closure work going on here so it's a bit monolithic. 
   */
@@ -46,9 +42,11 @@ class Check {
       let required = true
       if ( field.hasOwnProperty('required') ) required = Boolean(field.required)
 
-      if ( Array.isArray(field) ) {
-        [ property, label, type, restrictions ] = field
-      }
+      // don't think we need the array config any more
+      // if ( Array.isArray(field) ) {
+      //   [ property, label, type, restrictions ] = field
+      // }
+
       debug('field: prop"%s" label"%s" type:"%s"', property, label, type, restrictions)
       let this_check = []
 
@@ -117,5 +115,6 @@ class Check {
   }
 
 }
+Check._classInit()
 
 module.exports = { Check, CheckFailed, Exception }
