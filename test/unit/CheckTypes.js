@@ -1,6 +1,7 @@
 /* global expect */
 
 const { CheckTypes, Exception } = require('../../src/CheckTypes')
+const { Element } = require('../fixture/Element')
 
 describe('Check', function(){
 
@@ -12,16 +13,11 @@ describe('Check', function(){
     Object.keys(CheckTypes).forEach(key => {
       expect( CheckTypes[key], key ).to.have.property('args').and.be.an.instanceof(Array)
       expect( CheckTypes[key], key  ).to.have.property('test').and.be.a('function')
-      expect( CheckTypes[key], key  ).to.have.property('message')//.and.be.a('string')
+      expect( CheckTypes[key], key  ).to.have.property('messageFn').and.be.a('function')
     })
   })
 
-  // Mock a dom element, has `nodeType === 1` and is not a plain object
-  class Element {
-    constructor(){
-      this.nodeType = 1
-    }
-  }
+
 
   const ok_tests = {
     array:      [ [] ],

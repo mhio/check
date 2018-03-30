@@ -30,6 +30,33 @@ const isUndefined = require('lodash/isundefined')
 const isInteger = require('lodash/isinteger')
 
 
+/** 
+* If you have a common template string that is replaced a
+* lot, compile it first to remove some of the repeated string
+* processing.
+* @param {string} str - Template string to compile `a {{param}} replacer`
+* @param {object} options - Options
+* @param {RegExp} options.re - Regular Expression for the param tags to be replaced
+* @returns {function} Templating function
+*/
+export function compileObjectTemplate( str, options = {} ){
+  let re = options.re || /({{(\w+?)}})/  //Note the two capture groups.
+  let arr = str.split(re)
+  let end = arr.length
+  let return_arr = new Array(arr.length)
+  let templateCompiledObject = function templateCompiledObject( params ){
+    for ( let i = 0; i < end; i+=3 ){
+      return_arr[i] = arr[i]
+      let p = params[arr[i+2]]
+      if ( p === undefined ) p = arr[i+1] // Leave {{param}} in there
+      return_arr[i+1] = p // 1600k
+    }
+    return return_arr.join('')
+  }
+  templateCompiledObject.string = str
+  return templateCompiledObject
+}
+
 /**
 * Contains the config for all the different validation tests
 * This is loaded as `validate_config` into the `Validate` class at require time. 
@@ -67,13 +94,13 @@ export const CheckTypes = {
   date: {
     args: ['value'],
     test: isDate,
-    message: '{{name}} must be a Date',
+    message: '"{{name}}" must be a "date" but recieved "{{type}}"',
     group: 'language'
   },
   element: {
     args: ['value'],
     test: isElement,
-    message: '{{name}} must be an element',
+    message: '"{{name}}" must be a DOM Element',
     group: 'language'
   },
   error: {
@@ -114,8 +141,8 @@ export const CheckTypes = {
   number: {
     args: ['value'],
     test: isNumber,
-    //message: '{{name}} must be a Number',
-    message: p => `"${p.name}" must be a "number" but recieved "${typeof p.value}"`,
+    message: '"{{name}}" must be a "number" but recieved "{{type}}"',
+    //messageFn: p => `"${p.name}" must be a "number" but recieved "${typeof p.value}"`,
     group: 'language'
   },
   object: {
@@ -152,7 +179,7 @@ export const CheckTypes = {
     args: ['value'],
     test: isString,
     //message: '{{name}} must be a string',
-    message: p => `"${p.name}" must be a "string" but recieved "${typeof p.value}"`,
+    messageFn: p => `"${p.name}" must be a "string" but recieved "${typeof p.value}"`,
     group: 'language'
   },
   symbol: {
@@ -215,7 +242,7 @@ export const CheckTypes = {
     test: (val) => !isUndefined(val),
     negate: 'undefined',
     name: 'Value',
-    message: function(p){ return `${p} must be defined` }
+    message: '{{name}} must be defined',
   },
 
 
@@ -227,7 +254,7 @@ export const CheckTypes = {
       return ( size >= min && size <= max )
     },
     //message: '{{name}} must be {{min}} to {{max}}'
-    message: (p) => {
+    messageFn: (p) => {
       let msg = `${p.name} has length ${_size(p.value)}.`
       msg += ( p.min === p.max ) ? ` Must be ${p.min}` : ` Must be ${p.min} to ${p.max}`
       return msg
@@ -238,7 +265,7 @@ export const CheckTypes = {
   integer: {
     args: ['value'],
     test: isInteger,
-    message: '{{name}} must be an integer',
+    message: '"{{name}}" must be an "integer" but recieved "{{type}}"',
     group: 'number'
   },
   range: {
@@ -333,5 +360,11 @@ export const CheckTypes = {
   }
 
 }
+
+Object.keys(CheckTypes).forEach(key => {
+  if ( typeof CheckTypes[key].message === 'string' ){
+    CheckTypes[key].messageFn = compileObjectTemplate(CheckTypes[key].message)
+  } 
+})
 
 export { Exception }

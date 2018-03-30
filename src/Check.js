@@ -67,16 +67,18 @@ class Check {
       if ( test_type ) {
         let test_function = this.types[test_type].test
         if (!test_function) throw new CheckException(`No type "${test_type} available in Check`)
-        let test_message = this.types[test_type].message
+        let test_messageFn = this.types[test_type].messageFn
 
         this_check.push(function checkPropertyType(incoming_data){
           debug('incoming_data', incoming_data, property)
           
           let res = test_function(incoming_data[property], ...test_type_args)
           if ( res !== true ) {
-            if ( typeof test_message === 'function' ) {
-              test_message = test_message({ name: property, value: incoming_data[property]})
-            }
+            let test_message = test_messageFn({
+              name: property,
+              value: incoming_data[property],
+              type: typeof incoming_data[property]
+            })
             throw new exception(
               `${checks_label_space}${label} failed the ${test_type} check: ${test_message}`, {
               detail: { 
