@@ -1,9 +1,10 @@
 const forEach = require('lodash/forEach')
-const {Exception} = require('@mhio/exception')
 const debugr = require('debug')
 const debug = debugr('mhio:snippets-api:Check')
+const { Exception } = require('@mhio/exception')
 
-const CheckTypes = require('./CheckTypes')
+const { CheckTypes } = require('./CheckTypes')
+
 
 class CheckFailed extends Exception {
   constructor(message, metadata){
@@ -13,6 +14,7 @@ class CheckFailed extends Exception {
     }
   }
 }
+
 
 class Check {
 
@@ -116,4 +118,4 @@ class Check {
 
 }
 
-module.exports = { Check, CheckFailed }
+module.exports = { Check, CheckFailed, Exception }

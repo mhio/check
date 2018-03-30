@@ -1,11 +1,15 @@
 /* global expect */
-const { Check, CheckType, CheckFailed } = require('../../')
+const { Check, CheckTypes, CheckFailed } = require('../../')
 
 describe('mhio::test::built::check', function(){
 
-  it('should require the files', function(){
+  it('should require Check', function(){
     expect(Check).to.be.a('function')
-    expect(CheckType).to.be.a('function')
+  })
+  it('should require CheckTypes', function(){
+    expect(CheckTypes).to.be.an('object')
+  })
+  it('should require CheckFailed', function(){
     expect(CheckFailed).to.be.a('function')
   })
 
@@ -26,7 +30,7 @@ describe('mhio::test::built::check', function(){
       expect( fn ).to.be.a('function')
       expect( fn(simple_data) ).to.eql(simple_data)
     })
-    
+
     it('should error on check of a missing field with a custom label', function(){
       simple_config.label = 'IMALABEL'
       let fn = Check.generate(simple_config) 

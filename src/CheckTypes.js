@@ -1,6 +1,6 @@
 // # Validate Config
 
-const { Exception } = require('@mhio/exception')
+import { Exception } from '@mhio/exception'
 
 const _size = require('lodash/size')
 const isArray = require('lodash/isarray')
@@ -36,10 +36,10 @@ const isInteger = require('lodash/isinteger')
 *
 * A lot of the tests are based on [lodash](https://lodash.com/docs/) methods.
 */
-module.exports = {
+export const CheckTypes = {
 
   // It got a bit too meta here
-  // type: {
+  // this.type = {
   //   args: ['type', 'value', '...args'],
   //   test: ( type, value, ...args ) => Validate.type( type, value, ...args ),
   //   //message: '{{name}} {{type}} mismatch for {{value}}'
@@ -117,7 +117,7 @@ module.exports = {
     message: '{{name}} must be a Number',
     group: 'language'
   },
-  object:     {
+  object: {
     args: ['value'],
     test: isObject,
     message: '{{name}} must be an object',
@@ -129,31 +129,31 @@ module.exports = {
     message: '{{name}} must be a plain object',
     group: 'language'
   },
-  regexp:     {
+  regexp: {
     args: ['value'],
     test: isRegExp,
     message: '{{name}} must be a Regular Expression',
     group: 'language'
   },
-  safeinteger:{
+  safeinteger: {
     args: ['value'],
     test: isSafeInteger,
     negate: 'an unsafe integer',
     message: '{{name}} must be a safe integer'
   },
-  set:        {
+  set: {
     args: ['value'],
     test: isSet,
     message: '{{name}} must be a set',
     group: 'language'
   },
-  string:     {
+  string: {
     args: ['value'],
     test: isString,
     message: '{{name}} must be a string',
     group: 'language'
   },
-  symbol:     {
+  symbol: {
     args: ['value'],
     test: isSymbol,
     message: '{{name}} must be a symbol',
@@ -165,24 +165,24 @@ module.exports = {
     message: '{{name}} must be a typed array',
     group: 'language'
   },
-  weakmap:    {
+  weakmap: {
     args: ['value'],
     test: isWeakMap,
     message: '{{name}} must be a weak map',
     group: 'language'
   },
-  weakset:    {
+  weakset: {
     args: ['value'],
     test: isWeakSet,
     message: '{{name}} must be a weak set',
     group: 'language'
   },
-  nil:        { 
+  nil: { 
     args: ['value'],
     test: isNil,
     message: '{{name}} must be nil'
   },
-  notNil:        { 
+  notNil: { 
     args: ['value'],
     test: (value) => !isNil(value),
     message: '{{name}} must not be nil'
@@ -201,7 +201,7 @@ module.exports = {
     name: 'Value',
     message: '{{name}} must not be empty'
   },
-  undefined:  { 
+  undefined: { 
     args: ['value'],
     test: isUndefined,    
     negate: 'defined',  
@@ -229,7 +229,7 @@ module.exports = {
       let msg = `${p.name} has length ${p.value.length}.`
       msg += ( p.min === p.max ) ? ` Must be ${p.min}` : ` Must be ${p.min} to ${p.max}`
       return msg
-    }
+    },
   },
 
 
@@ -318,3 +318,4 @@ module.exports = {
     group: 'testing'
   }
 }
+
