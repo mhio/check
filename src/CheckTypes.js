@@ -114,7 +114,8 @@ export const CheckTypes = {
   number: {
     args: ['value'],
     test: isNumber,
-    message: '{{name}} must be a Number',
+    //message: '{{name}} must be a Number',
+    message: p => `"${p.name}" must be a "number" but recieved "${typeof p.value}"`,
     group: 'language'
   },
   object: {
@@ -150,7 +151,8 @@ export const CheckTypes = {
   string: {
     args: ['value'],
     test: isString,
-    message: '{{name}} must be a string',
+    //message: '{{name}} must be a string',
+    message: p => `"${p.name}" must be a "string" but recieved "${typeof p.value}"`,
     group: 'language'
   },
   symbol: {
@@ -213,7 +215,7 @@ export const CheckTypes = {
     test: (val) => !isUndefined(val),
     negate: 'undefined',
     name: 'Value',
-    message: '{{name}} must be defined'
+    message: function(p){ return `${p} must be defined` }
   },
 
 

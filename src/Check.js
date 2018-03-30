@@ -5,15 +5,16 @@ const { Exception } = require('@mhio/exception')
 
 const { CheckTypes } = require('./CheckTypes')
 
-
-class CheckFailed extends Exception {
+class CheckException extends Exception {
   constructor(message, metadata){
     super(message, metadata)
     if ( metadata ){
       this.detail = metadata.detail
     }
-  }
+  }  
 }
+
+class CheckFailed extends CheckException {}
 
 
 class Check {
@@ -38,17 +39,19 @@ class Check {
     let checks_label_space = ( checks_label ) ? `${checks_label} ` : ''
 
     forEach(config.fields, (field, property) =>{
-      let { label, type, restrictions } = field
-      let required = true
-      if ( field.hasOwnProperty('required') ) required = Boolean(field.required)
+      let label = field.label
+      let test_type = field.type
+      let test_type_args = field.type_args || []
+      let required = ( field.hasOwnProperty('required') )
+        ? Boolean(field.required)
+        : true
+      let this_check = []
 
       // don't think we need the array config any more
       // if ( Array.isArray(field) ) {
       //   [ property, label, type, restrictions ] = field
       // }
-
-      debug('field: prop"%s" label"%s" type:"%s"', property, label, type, restrictions)
-      let this_check = []
+      debug('field: prop"%s" label"%s" type:"%s"', property, label, test_type, test_type_args)
 
       this_check.push(function checkProperty(incoming_data){
         if (!incoming_data[property]) {
@@ -61,12 +64,21 @@ class Check {
         return incoming_data
       })
 
-      if ( type ) {
+      if ( test_type ) {
+        let test_function = this.types[test_type].test
+        if (!test_function) throw new CheckException(`No type "${test_type} available in Check`)
+        let test_message = this.types[test_type].message
+
         this_check.push(function checkPropertyType(incoming_data){
           debug('incoming_data', incoming_data, property)
-          let incoming_type = typeof incoming_data[property]
-          if (incoming_type !== type) {
-            throw new exception(`${checks_label_space}${label} is not a ${type}, it's ${incoming_type}`, {
+          
+          let res = test_function(incoming_data[property], ...test_type_args)
+          if ( res !== true ) {
+            if ( typeof test_message === 'function' ) {
+              test_message = test_message({ name: property, value: incoming_data[property]})
+            }
+            throw new exception(
+              `${checks_label_space}${label} failed the ${test_type} check: ${test_message}`, {
               detail: { 
                 from: stack,
                 value: incoming_data[property], 
@@ -117,4 +129,4 @@ class Check {
 }
 Check._classInit()
 
-module.exports = { Check, CheckFailed, Exception }
+module.exports = { Check, CheckFailed, CheckException, Exception }

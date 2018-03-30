@@ -32,7 +32,9 @@ describe('Check', function(){
       fields: { 
         one: { label: 'One' },
         two: { label: 'Two', required: false },
-        thr: { label: 'Thr', type: 'string' },
+        thr: { label: 'Thr', type: 'string', required: false  },
+        for: { label: 'Four', type: 'number', required: false  },
+        fiv: { label: 'Five', type: 'integer', required: false  },
       }
     }
     simple_data = { one: 'Nice' }
@@ -73,16 +75,30 @@ describe('Check', function(){
     expect( fn(empty_data) ).to.eql(empty_data)
   })
 
-  it('should succesfully check a simple field/value', function(){
+  it('should succesfully check a string field/value', function(){
     let fn = Check.generate(more_config) 
     let data = { one: 'won', thr: 'three'}
     expect( fn ).to.be.a('function')
     expect( fn(data) ).to.eql(data)
   })
 
-  it('should succesfully check a simple field/value', function(){
+  it('should succesfully check a string field/value', function(){
     let fn = Check.generate(more_config) 
     let data = { one: 'won', thr: 3 }
-    expect( ()=> fn(data) ).to.throw(/ is not a string/)
+    expect( ()=> fn(data) ).to.throw(/"thr" must be a "string" but recieved "number"/)
   })
+
+  it('should succesfully check a number field/value', function(){
+    let fn = Check.generate(more_config) 
+    let data = { one: 'won', for: 4}
+    expect( fn ).to.be.a('function')
+    expect( fn(data) ).to.eql(data)
+  })
+
+  it('should succesfully check a number field/value', function(){
+    let fn = Check.generate(more_config) 
+    let data = { one: 'won', for: 'for' }
+    expect( ()=> fn(data) ).to.throw(/"for" must be a "number" but recieved "string"/)
+  })
+
 })
