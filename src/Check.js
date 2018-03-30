@@ -1,9 +1,10 @@
 const forEach = require('lodash/forEach')
 const debugr = require('debug')
-const debug = debugr('mhio:snippets-api:Check')
+const debug = debugr('mhio:check:Check')
 const { Exception } = require('@mhio/exception')
 
-const { CheckTypes } = require('./CheckTypes')
+const { Checks } = require('./Checks')
+
 
 class CheckException extends Exception {
   constructor(message, metadata){
@@ -14,13 +15,14 @@ class CheckException extends Exception {
   }  
 }
 
+
 class CheckFailed extends CheckException {}
 
 
 class Check {
 
   static _classInit(){
-    this.types = CheckTypes
+    this.types = Checks.all
   }
 
   /** Generates a function to check some data 
@@ -54,7 +56,7 @@ class Check {
       debug('field: prop"%s" label"%s" type:"%s"', property, label, test_type, test_type_args)
 
       this_check.push(function checkProperty(incoming_data){
-        if (!incoming_data[property]) {
+        if ( !incoming_data.hasOwnProperty(property) ) {
           if (!required) return false // short circuit checks
           throw new exception(
             `${checks_label_space}No property "${property}" in data for "${label}"`,
@@ -68,7 +70,7 @@ class Check {
         let test_function = this.types[test_type].test
         if (!test_function) throw new CheckException(`No type "${test_type} available in Check`)
         let test_messageFn = this.types[test_type].messageFn
-
+        let needs_params = this.types[test_type].params
         this_check.push(function checkPropertyType(incoming_data){
           debug('incoming_data', incoming_data, property)
           

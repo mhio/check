@@ -8,6 +8,10 @@ describe('Check', function(){
     expect( Check ).to.be.ok
   })
 
+  it('should load types', function(){
+    expect( Check.types ).to.be.ok
+  })
+
   it('should load', function(){
     expect( new CheckFailed() ).to.be.an.instanceof( Exception )
   })
@@ -30,11 +34,14 @@ describe('Check', function(){
     }
     more_config = { 
       fields: { 
-        one: { label: 'One' },
-        two: { label: 'Two', required: false },
-        thr: { label: 'Thr', type: 'string', required: false  },
+        one: { label: 'Onne' },
+        two: { label: 'Twoo', required: false },
+        thr: { label: 'Thre', type: 'string', required: false  },
         for: { label: 'Four', type: 'number', required: false  },
         fiv: { label: 'Five', type: 'integer', required: false  },
+        six: { label: 'Sixa', type: 'length', params: [ 5, 6 ], required: false  },
+        six: { label: 'Sixa', type: 'length', params: { min: 5, max: 6 }, required: false  },
+        six: { label: 'Sixa', type: 'length', params: { length: 6 }, required: false  },
       }
     }
     simple_data = { one: 'Nice' }
@@ -85,7 +92,7 @@ describe('Check', function(){
   it('should succesfully check a string field/value', function(){
     let fn = Check.generate(more_config) 
     let data = { one: 'won', thr: 3 }
-    expect( ()=> fn(data) ).to.throw(/"thr" must be a "string" but recieved "number"/)
+    expect( ()=> fn(data) ).to.throw(/"thr" must be a string but recieved "number"/)
   })
 
   it('should succesfully check a number field/value', function(){
@@ -98,7 +105,7 @@ describe('Check', function(){
   it('should succesfully check a number field/value', function(){
     let fn = Check.generate(more_config) 
     let data = { one: 'won', for: 'for' }
-    expect( ()=> fn(data) ).to.throw(/"for" must be a "number" but recieved "string"/)
+    expect( ()=> fn(data) ).to.throw(/"for" must be a number but recieved "string"/)
   })
 
 })

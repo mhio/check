@@ -1,19 +1,23 @@
 /* global expect */
 
-const { CheckTypes, Exception } = require('../../src/CheckTypes')
+const { Checks, Exception } = require('../../src/Checks')
 const { Element } = require('../fixture/Element')
 
 describe('Check', function(){
 
   it('should load', function(){
-    expect( CheckTypes ).to.be.an('object')
+    expect( Checks ).to.be.an('function')
+  })
+
+  it('should load all checks', function(){
+    expect( Checks.all ).to.be.an('object')
   })
 
   it('should have a args, test, message', function(){
-    Object.keys(CheckTypes).forEach(key => {
-      expect( CheckTypes[key], key ).to.have.property('args').and.be.an.instanceof(Array)
-      expect( CheckTypes[key], key  ).to.have.property('test').and.be.a('function')
-      expect( CheckTypes[key], key  ).to.have.property('messageFn').and.be.a('function')
+    Object.keys(Checks.all).forEach(key => {
+      expect( Checks.all[key], key ).to.have.property('args').and.be.an.instanceof(Array)
+      expect( Checks.all[key], key  ).to.have.property('test').and.be.a('function')
+      expect( Checks.all[key], key  ).to.have.property('messageFn').and.be.a('function')
     })
   })
 
@@ -69,7 +73,7 @@ describe('Check', function(){
   describe('type ok tests', function(){
     Object.keys(ok_tests).forEach(key => {
       it(`should pass test for ${key}`, function(){
-        expect( CheckTypes[key].test.apply(null, ok_tests[key]), key).to.be.ok
+        expect( Checks.all[key].test.apply(null, ok_tests[key]), key).to.be.ok
       })
     })
   })
@@ -124,7 +128,7 @@ describe('Check', function(){
   describe('type error tests', function(){
     Object.keys(err_tests).forEach(key => {
       it(`should fail test for ${key}`, function(){
-        expect( CheckTypes[key].test.apply(null, err_tests[key]), key).to.be.false
+        expect( Checks.all[key].test.apply(null, err_tests[key]), key).to.be.false
       })
     })
   })
