@@ -106,36 +106,42 @@ export const CheckTypes = {
   error: {
     args: ['value'],
     test: isError,
-    message: '{{name}} must be an error',
+    message: '"{{name}}" must be an Error',
     group: 'language'
   },
   exception: {
     args: ['value'],
-    test: (value) => ( value instanceof Exception ),
-    message: '{{name}} must be an Exception',
+    test: ( value ) => ( value instanceof Exception ),
+    message: '"{{name}}" must be an instance of Exception',
     group: 'language'
   },
   finite: {
     args: ['value'],
     test: isFinite,
-    message: '{{name}} must be finite'
+    message: '"{{name}}" must be finite'
   },
   function: {
     args: ['value'],
     test: isFunction,
-    message: '{{name}} must be a function',
+    message: '"{{name}}" must be a function',
     group: 'language'
+  },
+  integer: {
+    args: ['value'],
+    test: isInteger,
+    message: '"{{name}}" must be an "integer" but recieved "{{type}}"',
+    group: 'number'
   },
   map: {
     args: ['value'],
     test: isMap,
-    message: '{{name}} must be a map',
+    message: '"{{name}}" must be a map',
     group: 'language'
   },
   nan: {
     args: ['value'],
     test: isNaN,
-    message: '{{name}} must be Not A Number',
+    message: '"{{name}}" must be Not A Number',
     group: 'language'
   },
   number: {
@@ -148,31 +154,31 @@ export const CheckTypes = {
   object: {
     args: ['value'],
     test: isObject,
-    message: '{{name}} must be an object',
+    message: '"{{name}}" must be an object',
     group: 'language'
   },
   plainobject: {
     args: ['value'],
     test: isPlainObject,
-    message: '{{name}} must be a plain object',
+    message: '"{{name}}" must be a plain object',
     group: 'language'
   },
   regexp: {
     args: ['value'],
     test: isRegExp,
-    message: '{{name}} must be a Regular Expression',
+    message: '"{{name}}" must be a Regular Expression',
     group: 'language'
   },
   safeinteger: {
     args: ['value'],
     test: isSafeInteger,
     negate: 'an unsafe integer',
-    message: '{{name}} must be a safe integer'
+    message: '"{{name}}" must be a safe integer'
   },
   set: {
     args: ['value'],
     test: isSet,
-    message: '{{name}} must be a set',
+    message: '"{{name}}" must be a set',
     group: 'language'
   },
   string: {
@@ -262,12 +268,7 @@ export const CheckTypes = {
   },
 
 
-  integer: {
-    args: ['value'],
-    test: isInteger,
-    message: '"{{name}}" must be an "integer" but recieved "{{type}}"',
-    group: 'number'
-  },
+
   range: {
     args: ['value','min','max'],
     test: (value, min, max) => ( value >= min && value <= max ),

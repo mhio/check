@@ -1,7 +1,7 @@
 /* global expect */
 
 const { Element } = require('../fixture/Element')
-const { Check, CheckFailed } = require('../../src/Check')
+const { Check, CheckFailed, Exception} = require('../../src/Check')
 
 describe('Integration::mhio::Check', function(){
 
@@ -10,19 +10,22 @@ describe('Integration::mhio::Check', function(){
   beforeEach(function(){
     more_config = { 
       fields: { 
-        one:    { label: 'One' },
-        two:    { label: 'Two',     required: false },
-        thr:    { label: 'Thr',     type: 'string',  required: false  },
-        for:    { label: 'Four',    type: 'number',  required: false  },
-        five:   { label: 'Five',    type: 'integer', required: false  },
-        six:    { label: 'Six',     type: 'date',    required: false  },
-        seven:  { label: 'Seven',   type: 'element', required: false  },
-        eight:  { label: 'Eight',   type: 'integer', required: false  },
-        nine:   { label: 'Nine',    type: 'integer', required: false  },
-        ten:    { label: 'Ten',     type: 'integer', required: false  },
-        eleven: { label: 'Eleven',  type: 'integer', required: false  },
-        twelve: { label: 'Twelve',  type: 'integer', required: false  },
-        thirte: { label: 'Thirte',  type: 'integer', required: false  },
+        one:      { label: 'One' },
+        two:      { label: 'Two',     required: false },
+        eight:    { label: 'Eight',   type: 'array',    required: false  },
+        nine:     { label: 'Nine',    type: 'boolean',  required: false  },
+        ten:      { label: 'Ten',     type: 'buffer',   required: false  },
+        six:      { label: 'Six',     type: 'date',     required: false  },
+        seven:    { label: 'Seven',   type: 'element',  required: false  },
+        eleven:   { label: 'Eleven',  type: 'error',    required: false  },
+        twelve:   { label: 'Twelve',  type: 'exception', required: false  },
+        thirtee:  { label: 'Thirtee', type: 'finite',   required: false  },
+        fourtee:  { label: 'Fourtee', type: 'function', required: false  },
+        five:     { label: 'Five',    type: 'integer',  required: false  },
+        fifteen:  { label: 'Fifteen', type: 'map',      required: false  },
+        sixteen:  { label: 'Sixteen', type: 'nan',      required: false  },
+        for:      { label: 'Four',    type: 'number',   required: false  },
+        thr:      { label: 'Thr',     type: 'string',   required: false  },
       }
     }
     fn = Check.generate(more_config) 
@@ -67,6 +70,26 @@ describe('Integration::mhio::Check', function(){
   it('should succesfully check a element field/value', function(){
     let data = { one: 'won', seven: {} }
     expect( ()=> fn(data) ).to.throw(/" must be a DOM Element/)
+  })
+
+  it('should succesfully check a error field/value', function(){
+    let data = { one: 'won', eleven: new Error()}
+    expect( fn(data) ).to.eql(data)
+  })
+
+  it('should succesfully check a error field/value', function(){
+    let data = { one: 'won', eleven: {} }
+    expect( ()=> fn(data) ).to.throw(/" must be an Error/)
+  })
+
+  it('should succesfully check a error field/value', function(){
+    let data = { one: 'won', twelve: new Exception()}
+    expect( fn(data) ).to.eql(data)
+  })
+
+  it('should succesfully check a error field/value', function(){
+    let data = { one: 'won', twelve: {} }
+    expect( ()=> fn(data) ).to.throw(/" must be an instance of Exception/)
   })
 
 })
