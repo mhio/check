@@ -6,7 +6,7 @@ lib/
 
 # test output + coverage
 test/output
-casserol*.tgz
+mhio-check*.tgz
 
 # logs
 yarn-error.log
