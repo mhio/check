@@ -2,7 +2,7 @@
   "name": "@mhio/check",
   "version": "0.1.0-0",
   "description": "Check JS types",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha test/unit test/int",
     "test:unit": "mocha test/unit",
