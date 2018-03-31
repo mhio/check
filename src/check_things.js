@@ -1,5 +1,5 @@
 // # Validate Config
-import { Exception } from '@mhio/exception'
+import { CheckFailed } from './exceptions'
 
 const _size = require('lodash/size')
 
@@ -14,7 +14,7 @@ export const check_things = {
   length: {
     args: ['value', 'min', 'max'],
     test: (value, min, max) => {
-      if ( min === undefined ) throw new Exception('Can\'t check length without a number')
+      if ( min === undefined ) throw new CheckFailed('Length check requires a length or min, max')
       if ( max === undefined ) max = min
       let size = _size(value)
       return ( size >= min && size <= max )
@@ -49,4 +49,4 @@ export const check_things = {
 
 }
 
-export { Exception }
+export { CheckFailed }

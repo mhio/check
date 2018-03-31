@@ -39,10 +39,14 @@ describe('Check', function(){
         thr: { label: 'Thre', type: 'string', required: false  },
         for: { label: 'Four', type: 'number', required: false  },
         fiv: { label: 'Five', type: 'integer', required: false  },
-        six: { label: 'Sixa', type: 'length', params: [ 5, 6 ], required: false  },
-        six: { label: 'Sixa', type: 'length', params: { min: 5, max: 6 }, required: false  },
-        six: { label: 'Sixa', type: 'length', params: { length: 6 }, required: false  },
-      }
+        six: { label: 'Sixa', type: 'length', args: [ 6, 6 ], required: false },
+        sev: { label: 'Sixa', type: 'length', args: { min: 6, max: 6 }, required: false },
+        //eig: { label: 'Sixa', type: 'length_range', min: 5, max: 6, required: false },
+        //nin: { label: 'Sixa', type: 'length', min: 5, max: 6, required: false },
+        //ten: { label: 'Sixa', type: { name: 'length', min: 5, max: 6 }, required: false  },
+        //ele: { label: 'Sixa', type: 'length', min: 5, max: 5, required: false },
+        twe: { label: 'Sixa', type: 'match', args: { regex: /test/ }, required: false },
+      },
     }
     simple_data = { one: 'Nice' }
     empty_data = {}

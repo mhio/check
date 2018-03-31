@@ -63,7 +63,9 @@
   "dependencies": {
     "@mhio/exception": "^0.1.12",
     "bluebird": "^3.5.0",
-    "lodash": "^4.17.5"
+    "dot": "^1.1.2",
+    "lodash": "^4.17.5",
+    "mustache": "^2.3.0"
   },
   "nyc": {
     "per-file": true,

@@ -1,12 +1,12 @@
 // # Validate Config
 
-import { Exception } from '@mhio/exception'
-const forEach = require('lodash/forEach')
-const reduce = require('lodash/reduce')
-const assign = require('lodash/assign')
-const debugr = require('debug')
+import forEach from 'lodash/forEach'
+import reduce from 'lodash/reduce'
+import assign from 'lodash/assign'
+import debugr from 'debug'
 const debug = debugr('mhio:check:Checks')
 
+import { CheckException, CheckFailed, Exception } from './exceptions'
 import { check_types } from './check_types'
 import { check_strings } from './check_strings'
 import { check_numbers } from './check_numbers'
@@ -70,4 +70,4 @@ export class Checks {
 }
 Checks._classInit()
 
-export { Exception }
+export { CheckException, CheckFailed, Exception }

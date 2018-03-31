@@ -1,22 +1,10 @@
 const forEach = require('lodash/forEach')
 const debugr = require('debug')
 const debug = debugr('mhio:check:Check')
-const { Exception } = require('@mhio/exception')
 
 const { Checks } = require('./Checks')
+const { CheckException, CheckFailed, Exception } = require('./exceptions')
 
-
-class CheckException extends Exception {
-  constructor(message, metadata){
-    super(message, metadata)
-    if ( metadata ){
-      this.detail = metadata.detail
-    }
-  }  
-}
-
-
-class CheckFailed extends CheckException {}
 
 
 class Check {
@@ -34,7 +22,7 @@ class Check {
 
     let checks = []
 
-    if (!config) throw new Exception('No Check config to generate function')
+    if (!config) throw new CheckException('No Check config to generate function')
 
     let exception = config.exception || CheckFailed
     let checks_label = config.label || ''
@@ -43,7 +31,8 @@ class Check {
     forEach(config.fields, (field, property) =>{
       let label = field.label
       let test_type = field.type
-      let test_type_args = field.type_args || []
+      if ( ! this.types[test_type] ) throw new CheckException(`No check "${test_type}" available`)
+      let test_type_args = field.args || []
       let required = ( field.hasOwnProperty('required') )
         ? Boolean(field.required)
         : true
@@ -70,7 +59,15 @@ class Check {
         let test_function = this.types[test_type].test
         if (!test_function) throw new CheckException(`No type "${test_type} available in Check`)
         let test_messageFn = this.types[test_type].messageFn
-        let needs_params = this.types[test_type].params
+        let needs_params = this.types[test_type].args
+        if ( needs_params && needs_params.length > 1 ) {
+          // we have extra args, create an array to unshift the 
+          // value onto
+          if ( !test_type_args || test_type_args.length < 1) {
+            let err_params = needs_params.slice(1)
+            throw new CheckException(`No args supplied in config for "${test_type}". Requires "${err_params.join(', ')}"`)
+          }
+        }
         this_check.push(function checkPropertyType(incoming_data){
           debug('incoming_data', incoming_data, property)
           
