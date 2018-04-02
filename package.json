@@ -8,7 +8,7 @@
     "test:unit": "mocha test/unit",
     "test:int": "mocha test/int",
     "test:built": "mocha test/built",
-    "test:watch": "nodemon -w src/ -w test/ -x mocha --bail -- test/unit test/int",
+    "test:watch": "nodemon -w src/ -w test/ -x 'mocha --bail -- test/unit test/int || exit 1'",
     "test:lint": "eslint src/ test/",
     "test:coverage": "yarn -s test:cover",
     "test:cover": "set -uex; yarn -s test:cover:run ; yarn -s test:cover:report; yarn -s test:cover:check",
