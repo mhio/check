@@ -2,21 +2,12 @@ import forEach  from 'lodash/forEach'
 import debugr from 'debug'
 const debug = debugr('mhio:check:Check')
 
-import { Checks } from './Checks'
 import { CheckException, CheckFailed, Exception } from './exceptions'
 export { CheckFailed, CheckException, Exception }
 
 
 /** Check a field that run a generic method with multiple arguments */
 export class CheckFieldMethod {
-
-  static _classInit(){
-    this.types = Checks.all
-  }
-
-  constructor( type, field ){
-    this.field = field
-  }
 
   static buildFunction( field ){
     let { field_name, label, config_source, exception, messageFn, args, argument_names, requires_arguments, check } = field
@@ -72,4 +63,3 @@ export class CheckFieldMethod {
   }
 
 }
-CheckFieldMethod._classInit()

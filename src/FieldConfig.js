@@ -42,7 +42,7 @@ export class FieldConfig {
     this._argument_names = Checks.all[this.type].args
     debug('this._argument_names', this.type, this._argument_names, Checks.all[this.type])
     this.requires_arguments = ( this._argument_names.length > 1 )
-    this._test = Checks.all[this.type].test
+    this.test = Checks.all[this.type].test
     this.messageFn = Checks.all[this.type].messageFn
   }
 

@@ -60,16 +60,16 @@ class Check {
     let exception = this.exception
     let checks_array = this.checks_array
 
-    return this.function = function(data){
-      if (!data) throw new exception('No object to check')
+    return this.function = function(incoming_data){
+      if (!incoming_data) throw new exception('No object was passed in to run checks against')
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
-        let res = checkAllFn(data)
+        let res = checkAllFn(incoming_data)
         debug('check result', res)
       }
 
-      // Return the data in case of modification
-      return data
+      // Return the incoming_data in case of modification
+      return incoming_data
     }
   }
 }
