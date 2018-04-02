@@ -82,9 +82,9 @@ class Check {
               name: property,
               type: typeof incoming_data[property]
             }
-            // Allow varible names values
+            // Allow varible name for the value
             message_props[value_name] = incoming_data[property]
-            // Attach check setup args with names
+            // Attach the args the test was setup with as named args
             forEach(extra_param_names, (arg_name, i) => {
               message_props[arg_name] = test_type_args[i]
             })
