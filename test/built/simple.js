@@ -1,5 +1,8 @@
 /* global expect */
-const { Check, CheckTypes, CheckFailed } = require('../../')
+const {
+  Check, Checks, CheckField, CheckFieldType, CheckFieldExists, 
+  CheckException, CheckFailed, Exception
+} = require('../../')
 
 describe('mhio::test::built::check', function(){
 
@@ -7,10 +10,26 @@ describe('mhio::test::built::check', function(){
     expect(Check).to.be.a('function')
   })
   it('should require CheckTypes', function(){
-    expect(CheckTypes).to.be.an('object')
+    expect(Checks.all).to.be.an('object')
+  })
+  it('should require CheckField', function(){
+    expect(CheckField).to.be.a('function')
+  })
+  it('should require CheckFieldType', function(){
+    expect(CheckFieldType).to.be.a('function')
+  })
+  it('should require CheckFieldExists', function(){
+    expect(CheckFieldExists).to.be.a('function')
+  })
+  
+  it('should require CheckException', function(){
+    expect(CheckException).to.be.a('function')
   })
   it('should require CheckFailed', function(){
     expect(CheckFailed).to.be.a('function')
+  })
+  it('should require Exception', function(){
+    expect(Exception).to.be.a('function')
   })
 
   describe('connections', function(){
