@@ -11,7 +11,7 @@ class CheckException extends Exception {
     let second = error.stack.split(/\n/)[2]
     if (!second) throw new Exception('Incoming Error stack doesn\'t have a second lines')
     let match = second.match(/\((.+)\)/)
-    if (!match) throw new Exception('Second line of stack didn\'t containe "(path/to/code.js)"')
+    if (!match) throw new Exception('Second line of stack didn\'t contain "(path/to/code.js)"')
     return match[1]
   }
 
