@@ -1,4 +1,3 @@
-const forEach = require('lodash/forEach')
 const debugr = require('debug')
 const debug = debugr('mhio:check:Check')
 
@@ -15,7 +14,7 @@ export class FieldConfig {
     this.types = Checks.all
   }
 
-  constructor( field_name, field_config, options = {} ){
+  constructor( field_name, field_config ){
     if (!field_name) throw new CheckException('No field name for new field')
     this.field_name = field_name
 

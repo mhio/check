@@ -1,4 +1,3 @@
-import forEach from 'lodash/forEach'
 import debugr from 'debug'
 const debug = debugr('mhio:check:Check')
 

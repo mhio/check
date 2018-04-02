@@ -1,7 +1,7 @@
 /* global expect */
 const debug = require('debug')('mhio:test:int:Check')
 const { Element } = require('../fixture/Element')
-const { Check, CheckFailed, Exception} = require('../../src/Check')
+const { Check, Exception} = require('../../src/Check')
 const forEach = require('lodash/forEach')
 
 describe('Integration::mhio::Check', function(){
@@ -201,8 +201,8 @@ describe('Integration::mhio::Check', function(){
 
     }
 
-    describe('length', function(){
-      
+    describe('integer', function(){
+      all_number_tests
     })
 
   })
@@ -249,6 +249,11 @@ describe('Integration::mhio::Check', function(){
         fail: [ '?' ],
       },
     }
+
+    describe('integer', function(){
+      all_string_tests
+    })
+
   })
 
 
@@ -270,6 +275,10 @@ describe('Integration::mhio::Check', function(){
       },
       //false:      [], // this will always false
     }
+
+    describe('other', function(){
+      all_other_tests
+    })
 
     describe('instance of ', function(){
 
