@@ -17,7 +17,8 @@ class Check {
     if ( !options.config_source ) {
       options.config_source = CheckException.source(new Error())
     }
-    let check = new Check(config)
+    let check = new Check(config, options)
+    check.function._check = check
     return check.function
   }
 

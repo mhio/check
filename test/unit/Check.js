@@ -24,6 +24,16 @@ describe('Check', function(){
     expect( ()=> Check.generate() ).to.throw(/No Check config to generate function/)
   })
 
+  it('should attach a source line from the calling function', function(){
+    let fn = Check.generate({ fields: {} }) 
+    expect( fn._check.config_source ).to.match(/test\/unit\/Check\.js/)
+  })
+
+  it('should should add a custom config source line', function(){
+    let fn = Check.generate({ fields: {} }, { config_source: 'me' }) 
+    expect( fn._check.config_source ).to.equal('me')
+  })
+
   let simple_config, simple_data, more_config, empty_data
 
   beforeEach(function(){
