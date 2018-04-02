@@ -39,8 +39,9 @@ export const check_things = {
     args: [ 'value', 'min', 'max' ],
     test: ( value, min, max ) => {
       debug('value %s  min %s  max %s', value, min, max)
-      if ( min === undefined ) throw new CheckFailed('The length_range check requires a min, max')
-      if ( max === undefined ) max = min
+      if ( min === undefined || max === undefined ) {
+        throw new CheckFailed('The length_range check requires a min, max')
+      }
       let size = _size(value)
       return ( size >= min && size <= max )
     },

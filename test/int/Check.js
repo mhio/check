@@ -314,6 +314,25 @@ describe('Integration::mhio::Check', function(){
 
     })
 
+    describe('length bad', function(){
+
+      it('should fail with no args', function(){
+        let fn = ()=> Check.generate({ fields: { len: { type: 'length' }} })
+        expect( fn ).to.throw(/no args supplied in config/i)
+      })
+
+      it('should fail with args undefined', function(){
+        let fn = ()=> Check.generate({ fields: { len: { type: 'length', args: undefined }} })
+        expect( fn  ).to.throw(/no args supplied in config/i)
+      })
+
+      it('should fail with an arg of unedefined', function(){
+        let chk = Check.generate({ fields: { len: { type: 'length', args: [undefined] }} })
+        expect( ()=> chk({ len: 'test' }) ).to.throw(/The length check requires a length argument/)
+      })
+
+    })
+
     describe('length_range 7 -> 8', function(){
 
       let chk 
@@ -337,6 +356,25 @@ describe('Integration::mhio::Check', function(){
 
       it('should fail with 10', function(){
         expect( ()=> chk({ len: 'testingano' }) ).to.throw(/len has a length of 10 but must be from 7 to 8/)
+      })
+
+    })
+
+    describe('length_range bad', function(){
+
+      it('should fail with no args', function(){
+        let fn = ()=> Check.generate({ fields: { len: { type: 'length_range' }} })
+        expect( fn ).to.throw(/no args supplied in config/i)
+      })
+
+      it('should fail with args undefined', function(){
+        let fn = ()=> Check.generate({ fields: { len: { type: 'length_range', args: undefined }} })
+        expect( fn  ).to.throw(/no args supplied in config/i)
+      })
+
+      it('should fail with an arg of unedefined', function(){
+        let chk = Check.generate({ fields: { len: { type: 'length_range', args: [undefined] }} })
+        expect( ()=> chk({ len: 'test' }) ).to.throw(/The length_range check requires a min, max/)
       })
 
     })
