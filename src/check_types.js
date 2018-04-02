@@ -174,6 +174,7 @@ export const check_types = {
     message: '"{{name}}" must be a weak set',
     group: 'language'
   },
+  
   nil: { 
     args: ['value'],
     test: isNil,

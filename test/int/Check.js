@@ -271,6 +271,26 @@ describe('Integration::mhio::Check', function(){
       //false:      [], // this will always false
     }
 
+    describe('instance of ', function(){
+
+      let chk 
+
+      before(function(){
+        chk = Check.generate({ fields: { io: { type: 'instanceof', args: [ Array ] }} })
+        debug(chk)
+      })
+
+      it('should check string', function(){
+        expect( chk({ io: [] })).to.be.ok
+      })
+
+      it('should check string', function(){
+        expect( ()=> chk({ io: {} })).to.throw(/is not an instance of Array/)
+      })
+
+    })
+
+
     describe('length 7', function(){
 
       let chk 

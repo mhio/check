@@ -7,16 +7,18 @@
 export const check_numbers = {
 
   range: {
-    args: ['value','min','max'],
+    args: [ 'value', 'min', 'max' ],
     test: (value, min, max) => ( value >= min && value <= max ),
     message: '{{name}} must be in {{min}} .. {{max}}',
-    group: 'number'
+    group: 'number',
+    requires: ['number'],
   },
   between: {
-    args: ['value','min','max'],
+    args: [ 'value', 'min', 'max' ],
     test: (value, min, max) => ( value > min && value < max ),
     message: '{{name}} must be between {{min}} and {{max}}',
-    group: 'number'
+    group: 'number',
+    requires: ['number'],
   },
 
 }

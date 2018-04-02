@@ -17,7 +17,7 @@ describe('Check', function(){
   })
 
   it('should generate a check function', function(){
-    expect( Check.generate({}) ).to.be.a('function')
+    expect( Check.generate({ fields:{} }) ).to.be.a('function')
   })
 
   it('should fail to generate a check function', function(){
@@ -40,12 +40,14 @@ describe('Check', function(){
         for: { label: 'Four', type: 'number', required: false  },
         fiv: { label: 'Five', type: 'integer', required: false  },
         six: { label: 'Sixa', type: 'length', args: [ 6, 6 ], required: false },
-        sev: { label: 'Sixa', type: 'length', args: { min: 6, max: 6 }, required: false },
+        sev: { label: 'Sixa', type: 'length_range', args: [ 6, 6 ], required: false },
+        //sev: { label: 'Sixa', type: 'length_range', args: { min: 6, max: 6 }, required: false },
         //eig: { label: 'Sixa', type: 'length_range', min: 5, max: 6, required: false },
         //nin: { label: 'Sixa', type: 'length', min: 5, max: 6, required: false },
         //ten: { label: 'Sixa', type: { name: 'length', min: 5, max: 6 }, required: false  },
         //ele: { label: 'Sixa', type: 'length', min: 5, max: 5, required: false },
-        twe: { label: 'Sixa', type: 'match', args: { regex: /test/ }, required: false },
+        twe: { label: 'Sixa', type: 'match', args: [ /test/ ], required: false },
+        //twe: { label: 'Sixa', type: 'match', args: { regex: /test/ }, required: false },
       },
     }
     simple_data = { one: 'Nice' }
@@ -75,7 +77,7 @@ describe('Check', function(){
     simple_config.exception = Error
     let fn = Check.generate(simple_config) 
     expect( fn ).to.throw(Error)
-    expect( Check.generate([{ property: 'one' }]) ).to.be.a('function')
+    expect( Check.generate({ fields: { property: 'one' } }) ).to.be.a('function')
   })
 
   it('should not error when a field is not required', function(){
