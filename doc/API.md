@@ -1,10 +1,20 @@
 ## Classes
 
 <dl>
+<dt><a href="#CheckField">CheckField</a></dt>
+<dd><p>The definition for a single field</p></dd>
+<dt><a href="#CheckFieldExists">CheckFieldExists</a></dt>
+<dd><p>The definition for a single field</p></dd>
+<dt><a href="#CheckFieldMethod">CheckFieldMethod</a></dt>
+<dd><p>Check a field that run a generic method with multiple arguments</p></dd>
+<dt><a href="#CheckFieldType">CheckFieldType</a></dt>
+<dd><p>Check the type of a field</p></dd>
 <dt><a href="#Checks">Checks</a></dt>
 <dd><p>Contains the config for all the different validation tests
 This is loaded as <code>validate_config</code> into the <code>Validate</code> class at require time. </p>
 <p>A lot of the tests are based on <a href="https://lodash.com/docs/">lodash</a> methods.</p></dd>
+<dt><a href="#FieldConfig">FieldConfig</a></dt>
+<dd><p>Handle the config for a single field</p></dd>
 </dl>
 
 ## Constants
@@ -14,7 +24,7 @@ This is loaded as <code>validate_config</code> into the <code>Validate</code> cl
 <dd><p>Contains the config for all the different validation tests
 This is loaded as <code>validate_config</code> into the <code>Validate</code> class at require time. </p>
 <p>A lot of the tests are based on <a href="https://lodash.com/docs/">lodash</a> methods.</p></dd>
-<dt><a href="#check_strings">check_strings</a></dt>
+<dt><a href="#hex_re_str">hex_re_str</a></dt>
 <dd><p>Contains the config for all the different validation tests
 This is loaded as <code>validate_config</code> into the <code>Validate</code> class at require time. </p>
 <p>A lot of the tests are based on <a href="https://lodash.com/docs/">lodash</a> methods.</p></dd>
@@ -26,6 +36,42 @@ This is loaded as <code>validate_config</code> into the <code>Validate</code> cl
 <dd><p>Contains all the lodash checksm and a couple more</p>
 <p>A lot of the tests are based on <a href="https://lodash.com/docs/">lodash</a> methods.</p></dd>
 </dl>
+
+<a name="CheckField"></a>
+
+## CheckField
+<p>The definition for a single field</p>
+
+**Kind**: global class  
+
+* * *
+
+<a name="CheckFieldExists"></a>
+
+## CheckFieldExists
+<p>The definition for a single field</p>
+
+**Kind**: global class  
+
+* * *
+
+<a name="CheckFieldMethod"></a>
+
+## CheckFieldMethod
+<p>Check a field that run a generic method with multiple arguments</p>
+
+**Kind**: global class  
+
+* * *
+
+<a name="CheckFieldType"></a>
+
+## CheckFieldType
+<p>Check the type of a field</p>
+
+**Kind**: global class  
+
+* * *
 
 <a name="Checks"></a>
 
@@ -57,6 +103,90 @@ processing.</p>
 
 * * *
 
+<a name="FieldConfig"></a>
+
+## FieldConfig
+<p>Handle the config for a single field</p>
+
+**Kind**: global class  
+
+* [FieldConfig](#FieldConfig)
+    * [.type](#FieldConfig+type)
+    * [.test](#FieldConfig+test) : <code>function</code>
+    * [.required](#FieldConfig+required) : <code>Boolean</code>
+    * [.label](#FieldConfig+label) : <code>String</code>
+    * [.args](#FieldConfig+args) : <code>Array</code>
+    * [.argument_names](#FieldConfig+argument_names) : <code>Array.&lt;String&gt;</code>
+    * [.config_source](#FieldConfig+config_source) : <code>string</code>
+
+
+* * *
+
+<a name="FieldConfig+type"></a>
+
+### fieldConfig.type
+<p>The type of this check (from [Checks]</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+test"></a>
+
+### fieldConfig.test : <code>function</code>
+<p>The test function for this check</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+required"></a>
+
+### fieldConfig.required : <code>Boolean</code>
+<p>Is this field required</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+label"></a>
+
+### fieldConfig.label : <code>String</code>
+<p>A human label for this field</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+args"></a>
+
+### fieldConfig.args : <code>Array</code>
+<p>Arguments to be passed onto the check function for this field
+<code>checkFunction(value, ...args)</code></p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+argument_names"></a>
+
+### fieldConfig.argument_names : <code>Array.&lt;String&gt;</code>
+<p>The checks configured argument names</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+config_source"></a>
+
+### fieldConfig.config_source : <code>string</code>
+<p>Pass in some config source info, normally an Error stack line from
+Wherever <code>Check.generate</code> was originally called</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
 <a name="check_numbers"></a>
 
 ## check_numbers
@@ -68,9 +198,9 @@ This is loaded as <code>validate_config</code> into the <code>Validate</code> cl
 
 * * *
 
-<a name="check_strings"></a>
+<a name="hex_re_str"></a>
 
-## check_strings
+## hex_re_str
 <p>Contains the config for all the different validation tests
 This is loaded as <code>validate_config</code> into the <code>Validate</code> class at require time. </p>
 <p>A lot of the tests are based on <a href="https://lodash.com/docs/">lodash</a> methods.</p>
