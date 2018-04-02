@@ -186,11 +186,6 @@ describe('Integration::mhio::Check', function(){
   describe('numbers', function(){
 
     let all_number_tests = {
-      length:{
-        ok:   [ ['testing', 7, 8], ['testing', 6, 7], ['testing', 7] ],
-        fail: [ ['testing', 8], ['testing',5,6], ['testing',8,9] ],
-        error: /has a length of \d+ and/
-      },
       integer: {
         ok:   [ 1 ],
         fail: [ '1' ],
@@ -206,10 +201,14 @@ describe('Integration::mhio::Check', function(){
 
     }
 
+    describe('length', function(){
+      
+    })
+
   })
 
 
-  describe('numbers', function(){
+  describe('strings', function(){
 
     let all_string_tests = {
       strinteger: {
@@ -254,8 +253,13 @@ describe('Integration::mhio::Check', function(){
 
 
   describe('other', function(){
-    
+
     let all_other_tests = {
+      length:{
+        ok:   [ ['testing', 7, 8], ['testing', 6, 7], ['testing', 7] ],
+        fail: [ ['testing', 8], ['testing',5,6], ['testing',8,9] ],
+        error: /has a length of \d+ and/
+      },
       testing: {
         ok:   [ true, true ],
         fail: [ false, true ],
@@ -266,6 +270,56 @@ describe('Integration::mhio::Check', function(){
       },
       //false:      [], // this will always false
     }
-    
+
+    describe('length 7', function(){
+
+      let chk 
+
+      before(function(){
+        chk = Check.generate({ fields: { len: { type: 'length', args: [ 7 ]}} })
+        debug(chk)
+      })
+        
+      it('should be ok with 7', function(){
+        expect( chk({len: 'testing'}) ).to.be.ok
+      })
+
+      it('should fail with 8', function(){
+        expect( ()=> chk({ len: 'testinga' }) ).to.throw(/len has a length of 8 but must be 7/)
+      })
+
+      it('should fail with 6', function(){
+        expect( ()=> chk({ len: 'testin' }) ).to.throw(/len has a length of 6 but must be 7/)
+      })
+
+    })
+
+    describe('length_range 7 -> 8', function(){
+
+      let chk 
+
+      before(function(){
+        chk = Check.generate({ fields: { len: { type: 'length_range', args: [ 7, 8 ]}} })
+        debug(chk)
+      })
+        
+      it('should be ok with 7', function(){
+        expect( chk({len: 'testing'}) ).to.be.ok
+      })
+
+      it('should be ok with 8', function(){
+        expect( chk({ len: 'testinga' }) ).to.be.ok
+      })
+
+      it('should fail with 6', function(){
+        expect( ()=> chk({ len: 'testin' }) ).to.throw(/len has a length of 6 but must be from 7 to 8/)
+      })
+
+      it('should fail with 10', function(){
+        expect( ()=> chk({ len: 'testingano' }) ).to.throw(/len has a length of 10 but must be from 7 to 8/)
+      })
+
+    })
+
   })
 })

@@ -23,15 +23,17 @@ class Check {
     let checks = []
 
     if (!config) throw new CheckException('No Check config to generate function')
+    if (!config.fields) throw new CheckException('No "fields" in check config')
 
     let exception = config.exception || CheckFailed
     let checks_label = config.label || ''
     let checks_label_space = ( checks_label ) ? `${checks_label} ` : ''
 
     forEach(config.fields, (field, property) =>{
-      let label = field.label
+      let label = field.label || property
       let test_type = field.type
       if ( ! this.types[test_type] ) throw new CheckException(`No check "${test_type}" available`)
+      let check_test_config = this.types[test_type]
       let test_type_args = field.args || []
       let required = ( field.hasOwnProperty('required') )
         ? Boolean(field.required)
@@ -55,29 +57,41 @@ class Check {
         return incoming_data
       })
 
-      if ( test_type ) {
-        let test_function = this.types[test_type].test
+      if ( test_type !== undefined ) {
+        let test_function = check_test_config.test
         if (!test_function) throw new CheckException(`No type "${test_type} available in Check`)
-        let test_messageFn = this.types[test_type].messageFn
-        let needs_params = this.types[test_type].args
+        let test_messageFn = check_test_config.messageFn
+        let needs_params = check_test_config.args
         if ( needs_params && needs_params.length > 1 ) {
           // we have extra args, create an array to unshift the 
           // value onto
           if ( !test_type_args || test_type_args.length < 1) {
-            let err_params = needs_params.slice(1)
-            throw new CheckException(`No args supplied in config for "${test_type}". Requires "${err_params.join(', ')}"`)
+            let extra_params = needs_params.splice(1)
+            throw new CheckException(`No args supplied in config for "${test_type}". Requires "${extra_params.join(', ')}"`)
           }
         }
+        let value_name = needs_params[0]
+        let extra_param_names = needs_params.splice(1)
+
         this_check.push(function checkPropertyType(incoming_data){
-          debug('incoming_data', incoming_data, property)
+          debug('incoming_data', incoming_data, property, needs_params)
           
           let res = test_function(incoming_data[property], ...test_type_args)
           if ( res !== true ) {
-            let test_message = test_messageFn({
+            let message_props = {
               name: property,
-              value: incoming_data[property],
               type: typeof incoming_data[property]
+            }
+            // Allow varible names values
+            message_props[value_name] = incoming_data[property]
+            // Attach check setup args with names
+            forEach(extra_param_names, (arg_name, i) => {
+              message_props[arg_name] = test_type_args[i]
             })
+            // Check config describes names or args in `.args`, shift `value`.
+            // user check config describes values of args in an array
+
+            let test_message = test_messageFn(message_props)
             throw new exception(
               `${checks_label_space}${label} failed the ${test_type} check: ${test_message}`, {
               detail: { 

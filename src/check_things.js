@@ -1,6 +1,6 @@
 // # Validate Config
 import { CheckFailed } from './exceptions'
-
+const debug = require('debug')('mhio:check:check_things')
 const _size = require('lodash/size')
 
 /**
@@ -12,8 +12,25 @@ const _size = require('lodash/size')
 export const check_things = {
 
   length: {
+    args: ['value', 'length'],
+    test: (value, length) => {
+      debug('value %s  length %s', value, length)
+      if ( length === undefined ) throw new CheckFailed('Length check requires a length')
+      let size = _size(value)
+      return ( size === length )
+    },
+    //message: '{{name}} must be {{min}} to {{max}}'
+    messageFn: (p) => {
+      debug('message props', p)
+      let msg = `${p.name} has a length of ${_size(p.value)} but must be ${p.length}`
+      return msg
+    },
+  },
+
+  length_range: {
     args: ['value', 'min', 'max'],
     test: (value, min, max) => {
+      debug('value %s  min %s  max %s', value, min, max)
       if ( min === undefined ) throw new CheckFailed('Length check requires a length or min, max')
       if ( max === undefined ) max = min
       let size = _size(value)
@@ -21,7 +38,8 @@ export const check_things = {
     },
     //message: '{{name}} must be {{min}} to {{max}}'
     messageFn: (p) => {
-      let msg = `${p.name} has a length of ${_size(p.value)} and `
+      debug('message props', p)
+      let msg = `${p.name} has a length of ${_size(p.value)} but `
       msg += ( p.min === p.max ) ? `must be ${p.min}` : `must be from ${p.min} to ${p.max}`
       return msg
     },
