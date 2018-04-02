@@ -7,7 +7,7 @@
     "test": "mocha test/unit test/int",
     "test:unit": "mocha test/unit",
     "test:int": "mocha test/int",
-    "test:built": "mocha test/built",
+    "test:built": "mocha --opts test/mocha.opts.built test/built",
     "test:watch": "nodemon -w src/ -w test/ -x 'mocha --bail -- test/unit test/int || exit 1'",
     "test:lint": "eslint src/ test/",
     "test:coverage": "yarn -s test:cover",
