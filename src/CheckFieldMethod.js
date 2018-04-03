@@ -1,6 +1,8 @@
 import forEach  from 'lodash/forEach'
+import noop  from 'lodash/noop'
 import debugr from 'debug'
-const debug = debugr('mhio:check:Check')
+const _debug = debugr('mhio:check:CheckFieldMethod')
+const debug = (debug.enabled) ? _debug : noop
 
 import { CheckException, CheckFailed, Exception } from './exceptions'
 export { CheckFailed, CheckException, Exception }

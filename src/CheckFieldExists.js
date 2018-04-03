@@ -1,5 +1,5 @@
 import debugr from 'debug'
-const debug = debugr('mhio:check:Check')
+const debug = debugr('mhio:check:CheckFieldExists')
 
 
 /** The definition for a single field */

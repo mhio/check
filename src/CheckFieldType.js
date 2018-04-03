@@ -1,5 +1,8 @@
+import noop from 'lodash/noop'
+
 import debugr from 'debug'
-const debug = debugr('mhio:check:Check')
+const _debug = debugr('mhio:check:CheckFieldType')
+let debug = (_debug.enabled) ? _debug : noop
 
 import { CheckException, CheckFailed, Exception } from './exceptions'
 export { CheckFailed, CheckException, Exception }
