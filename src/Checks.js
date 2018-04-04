@@ -26,8 +26,32 @@ import { check_things } from './check_things'
 export class Checks {
 
   static _classInit(){
+    this.resetTypes()
+    this.resetChecks()
+  }
+
+  /** Add custom type to config */
+  static addType(name, config){
+    this.types[name] = config
+    return this
+  }
+
+  /** Add custom type to config */
+  static addCheck(name, config){
+    this.all[name] = config
+    return this
+  }
+
+  /** Reset all types back to source */
+  static resetTypes(){
     this.types = this.loadCheckConfig(check_types)
+    return this
+  }
+
+  /** Reset all checks back to source */
+  static resetChecks(){
     this.all = this.loadCheckConfig(check_strings, check_numbers, check_things)
+    return this
   }
 
   static loadCheckConfig(...classes){
@@ -61,14 +85,14 @@ export class Checks {
     let templateCompiledObject = (arr.length === 1)
       ? function templateCompiledObject(){ return str }
       : function templateCompiledObject( params ){
-        for ( let i = 0; i < end; i+=3 ){
-          return_arr[i] = arr[i]
-          let p = params[arr[i+2]]
-          if ( p === undefined ) p = arr[i+1] // Leave {{param}} in there
-          return_arr[i+1] = p // 1600k
+          for ( let i = 0; i < end; i+=3 ){
+            return_arr[i] = arr[i]
+            let p = params[arr[i+2]]
+            if ( p === undefined ) p = arr[i+1] // Leave {{param}} in there
+            return_arr[i+1] = p // 1600k
+          }
+          return return_arr.join('')
         }
-        return return_arr.join('')
-      }
       templateCompiledObject.string = str
       return templateCompiledObject
   }

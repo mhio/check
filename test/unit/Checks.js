@@ -21,7 +21,21 @@ describe('Check', function(){
     })
   })
 
+  it('should add a check', function(){
+    expect( Checks.addCheck('dumb', {}) ).to.be.ok
+  })
 
+ it('should reset all checks', function(){
+    expect( Checks.resetChecks() ).to.be.ok
+  })
+
+  it('should add a type', function(){
+    expect( Checks.addType('dumb', {}) ).to.be.ok
+  })
+
+  it('should reset all types', function(){
+    expect( Checks.resetTypes() ).to.be.ok
+  })
 
   const ok_test_types = {
     array:      [ [] ],

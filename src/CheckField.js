@@ -1,5 +1,6 @@
 const debugr = require('debug')
 const debug = debugr('mhio:check:CheckField')
+const has = require('lodash/has')
 
 const { CheckException, CheckFailed, Exception } = require('./exceptions')
 export { CheckFailed, CheckException, Exception }
@@ -27,12 +28,46 @@ export class CheckField extends FieldConfig {
     this.parent_check = parent_check
 
     // or duplicate them here:
-    this.exception = field_config.exception || this.parent_check.exception || CheckFailed
-    this.config_source = field_config.config_source || this.parent_check.config_source || ''
+    this.exception = ( has(field_config,'exception') )
+      ? field_config.exception
+      : this.parent_check.exception || CheckFailed
+
+    this.config_source = ( has(field_config, 'config_source') )
+      ? field_config.config_source
+      : this.parent_check.config_source || ''
 
     this.checks_array = []
 
     this.buildFunction()
+  }
+
+  get parent_check(){ return this._parent_check }
+  set parent_check(value){
+    if (!value) {
+      throw new CheckException('The parent Check instance must have a value')
+    }
+    this._parent_check = value
+  }
+
+  get exception(){ return this._exception }
+  set exception(value){
+    debug('exception is try to set', value)
+    if ( !value ){
+      throw new CheckException('The custom exception must have a value', {
+        detail: { value: value }
+      })
+    }
+    if ( !value.prototype ){
+      throw new CheckException('The custom exception must be a constructor with a prototype', {
+        detail: { value: value }
+      })
+    }
+    if ( value !== Error && value.prototype instanceof Error !== true ){
+      throw new CheckException('The custom exception must be an instance of Error', {
+        detail: { value: value }
+      })
+    }
+    this._exception = value
   }
 
   buildFunction(){
