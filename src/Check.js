@@ -10,7 +10,8 @@ import { CheckField } from './CheckField'
 class Check {
 
   static _classInit(){
-    this.types = Checks.all
+    this.types = Checks.types
+    this.all = Checks.all
   }
 
   static generate( config, options = {} ){

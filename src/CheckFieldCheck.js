@@ -1,7 +1,7 @@
 import forEach  from 'lodash/forEach'
 import noop  from 'lodash/noop'
 import debugr from 'debug'
-const _debug = debugr('mhio:check:CheckFieldMethod')
+const _debug = debugr('mhio:check:CheckFieldCheck')
 const debug = (_debug.enabled) ? _debug : noop
 
 import { CheckException, CheckFailed, Exception } from './exceptions'
@@ -9,17 +9,17 @@ export { CheckFailed, CheckException, Exception }
 
 
 /** Check a field that run a generic method with multiple arguments */
-export class CheckFieldMethod {
+export class CheckFieldCheck {
 
   static buildFunction( field ){
-    let { field_name, label, config_source, exception, messageFn, args, argument_names, requires_arguments, check } = field
-    let field_test_type = field.type
-    let testFn = field.test
+    let { field_name, label, config_source, exception, checkMessageFn, args, argument_names, requires_arguments, check } = field
+    let field_check_name = field.check
+    let testFn = field.check_test
 
     // If there's an overall check label, use it for the exception
     let exception_prefix = check.label_with_space
 
-    debug('CheckFieldMethod - prop[%s] label[%s] type[%s]', field_name, label, field_test_type, args, requires_arguments )
+    debug('CheckFieldCheck - prop[%s] label[%s] type[%s]', field_name, label, field_check_name, args, requires_arguments )
 
 
     let test_args = []
@@ -27,7 +27,7 @@ export class CheckFieldMethod {
       // we have extra args, create an array to unshift the 
       // value onto
       if ( !args || !args.length || args.length < 1) {
-        throw new CheckException(`No args supplied in config for "${field_test_type}". Requires "${argument_names.slice(1).join(', ')}"`)
+        throw new CheckException(`No args supplied in config for "${field_check_name}". Requires "${argument_names.slice(1).join(', ')}"`)
       }
       test_args = args
     }
@@ -54,9 +54,9 @@ export class CheckFieldMethod {
         // Check config describes names or args in `.args`, shift `value`.
         // user check config describes values of args in an array
 
-        let test_message = messageFn(message_props)
+        let test_message = checkMessageFn(message_props)
         throw new exception(
-          `${exception_prefix}${label} failed the ${field_test_type} check: ${test_message}`, {
+          `${exception_prefix}${label} failed the ${field_check_name} check: ${test_message}`, {
           detail: message_props
         })
       }

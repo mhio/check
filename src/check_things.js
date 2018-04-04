@@ -13,7 +13,11 @@ export const check_things = {
 
   instanceof: {
     args: [ 'object', 'cls' ],
-    test: function( object, cls ){ return ( object instanceof cls ) },
+    test: function( object, cls ){ 
+      if (!object) return false
+      if (!cls) return false
+      return ( object instanceof cls )
+    },
     //message: '{{object}} is not an instance of {{cls}}',
     messageFn: (p)=> `${p.object} is not an instance of ${p.cls.name}`,
     requires: [ 'object' ],

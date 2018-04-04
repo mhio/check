@@ -17,7 +17,7 @@ describe('CheckField', function(){
   })
 
   it('should fail to create an instance without check', function(){
-    expect( ()=> new CheckField('name', {}) ).to.throw(/No check instance for new field/)
+    expect( ()=> new CheckField('name', {}) ).to.throw(/No parent check instance for new field/)
   })
 
   it('should create a new instance', function(){

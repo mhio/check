@@ -8,8 +8,8 @@ export class CheckFieldExists {
   static buildFunction(field){
     let { field_name, label, required, config_source, exception } = field
 
-    // If there's an overall check label, use it for the exception
-    let exception_prefix = field.check.label_with_space
+    // If there's an overall parent Check label, use it for the exception
+    let exception_prefix = field.parent_check.label_with_space
 
     debug('CheckFieldExists - prop[%s] label[%s] req[%s]', field_name, label, required)
 
@@ -24,6 +24,10 @@ export class CheckFieldExists {
       }
       return incoming_data
     }
+  }
+
+  constructor(field){
+    this.field = field
   }
 
 }

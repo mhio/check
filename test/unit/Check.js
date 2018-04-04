@@ -14,6 +14,10 @@ describe('Check', function(){
       expect( Check.types ).to.be.ok
     })
 
+    it('should load types', function(){
+      expect( Check.types ).to.be.ok
+    })
+
     it('should load', function(){
       expect( new CheckFailed() ).to.be.an.instanceof( Exception )
     })
@@ -37,11 +41,11 @@ describe('Check', function(){
     })
 
     it('should generate with a string config', function(){
-      expect( Check.generate({ fields:{ 'test': 'string' } }) ).to.be.a('function')
+      expect( Check.generate({ fields:{ 'atestf': 'string' } }) ).to.be.a('function')
     })
 
     it('should faile to set up with a bad type', function(){
-      let cfg = { fields:{ 'test': { type: undefined } } }
+      let cfg = { fields:{ 'btestf': { type: undefined } } }
       expect( ()=> Check.generate(cfg) ).to.throw(/No type to set for field config/)
     })
 
@@ -64,14 +68,14 @@ describe('Check', function(){
           thr: { label: 'Thre', type: 'string', required: false  },
           for: { label: 'Four', type: 'number', required: false  },
           fiv: { label: 'Five', type: 'integer', required: false  },
-          six: { label: 'Sixa', type: 'length', args: [ 6 ], required: false },
-          sev: { label: 'Sixa', type: 'length', args: [ 6, 6 ], required: false },
+          six: { label: 'Sixa', check: 'length', args: [ 6 ], required: false },
+          sev: { label: 'Sixa', check: 'length', args: [ 6, 6 ], required: false },
           //sev: { label: 'Sixa', type: 'length_range', args: { min: 6, max: 6 }, required: false },
           //eig: { label: 'Sixa', type: 'length_range', min: 5, max: 6, required: false },
           //nin: { label: 'Sixa', type: 'length', min: 5, max: 6, required: false },
           //ten: { label: 'Sixa', type: { name: 'length', min: 5, max: 6 }, required: false  },
           //ele: { label: 'Sixa', type: 'length', min: 5, max: 5, required: false },
-          twe: { label: 'Sixa', type: 'match', args: [ /test/ ], required: false },
+          twe: { label: 'Sixa', check: 'match', args: [ /test/ ], required: false },
           //twe: { label: 'Sixa', type: 'match', args: { regex: /test/ }, required: false },
         },
       }

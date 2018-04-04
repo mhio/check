@@ -33,14 +33,14 @@ export const check_strings = {
     test: (value)=> Boolean(/^[0-9]+$/.exec(value)),
     message: '{{name}} must be an integer [0-9]+',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   match: {
     args: ['string', 'regex'],
     test: ( string, regex ) => Boolean(string.match(regex)),
     message: '{{name}} must match regular expression {{regex}}',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   uuid: {
     args: ['string'],
@@ -49,49 +49,49 @@ export const check_strings = {
     ),
     message: '{{name}} must match a UUID',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   stuid: {
     args: ['string'],
     test: ( string ) => Boolean(stuid_complete_re.exec(string)),
     message: '{{name}} must match a base62 uid [a-zA-Z0-9]{18}',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   alphaNumericDashUnderscore: {
     args: ['string'],
     test: (string) => Boolean(/^[A-Za-z0-9_-]+$/.exec(string)),
     message: '{{name}} must only contain letters, numbers, dash and underscore [ A-Z a-z 0-9 _ - ]',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   alphaNumeric: { 
     args: ['string'],
     test: (string) => Boolean(string.match(/^[A-Za-z0-9]+$/)),
     message: '{{name}} must only contain letters and numbers [ A-Z a-z 0-9 ]',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   alpha: { 
     args: ['string'],
     test: (string) => Boolean(string.match(/^[A-Za-z]+$/)),
     message: '{{name}} must only contain letters [ A-Z a-z ]',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   numeric: { 
     args: ['string'],
     test: (string) => Boolean(string.match(/^[0-9]+$/)),
     message: '{{name}} must only contain numbers [ 0-9 ]',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
   word: { 
     args: ['string'],
     test: (string) => Boolean(string.match(/^\w+$/)),
     message: '{{name}} must only contain numbers [ 0-9 ]',
     group: 'string',
-    requires: [ 'string' ]
+    requires: 'string'
   },
 
 }

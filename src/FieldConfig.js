@@ -25,6 +25,7 @@ export class FieldConfig {
   set config( field_config ){
     if ( field_config === 'string') return this.type = field_config
     if ( field_config.hasOwnProperty('type') ) this.type = field_config.type
+    if ( field_config.hasOwnProperty('check') ) this.check = field_config.check
     this.label = field_config.label || this.field_name
     this.args = field_config.args || field_config.arguments
     this.required = ( field_config.hasOwnProperty('required') )
@@ -34,15 +35,25 @@ export class FieldConfig {
 
   /** The type of this check (from [Checks] */
   get type(){ return this._type }
-  set type( type ){
-    if (!type) throw new CheckException('No type to set for field config')
-    if (!Checks.all[type]) throw new CheckException(`No check type "${type}" available for field`)
-    this._type = type
-    this._argument_names = Checks.all[this.type].args
-    debug('this._argument_names', this.type, this._argument_names, Checks.all[this.type])
+  set type( type_name ){
+    if (!type_name) throw new CheckException('No type to set for field config')
+    if (!Checks.types[type_name]) throw new CheckException(`No type "${type_name}" available for field "${this.field_name}"`)
+    this._type = type_name
+    this.type_test = Checks.types[type_name].test
+    this.type_messageFn = Checks.types[type_name].messageFn
+  }
+
+  get check() { return this._check }
+  set check( check_name ){
+    if (!check_name) throw new CheckException('No check to set for field config')
+    if (!Checks.all[check_name]) throw new CheckException(`No check "${check_name}" available for field "${this.field_name}"`)
+    this._check = check_name
+    this._argument_names = Checks.all[check_name].args
+    debug('this._argument_names', this.check, this._argument_names, Checks.all[check_name])
     this.requires_arguments = ( this._argument_names.length > 1 )
-    this.test = Checks.all[this.type].test
-    this.messageFn = Checks.all[this.type].messageFn
+    this.check_test = Checks.all[check_name].test
+    this.checkMessageFn = Checks.all[check_name].messageFn
+    if (Checks.all[check_name].requires) this.type = Checks.all[check_name].requires
   }
 
   /** 

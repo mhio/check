@@ -23,10 +23,11 @@ import { check_things } from './check_things'
 export class Checks {
 
   static _classInit(){
-    this.all = this.loadChecks(check_types, check_strings, check_numbers, check_things)
+    this.types = this.loadCheckConfig(check_types)
+    this.all = this.loadCheckConfig(check_strings, check_numbers, check_things)
   }
 
-  static loadChecks(...classes){
+  static loadCheckConfig(...classes){
     let checks = reduce(classes, (acc, cls) => {
       debug('loading cls', cls.name)
       return assign(acc, cls)

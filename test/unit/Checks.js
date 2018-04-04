@@ -23,7 +23,7 @@ describe('Check', function(){
 
 
 
-  const ok_tests = {
+  const ok_test_types = {
     array:      [ [] ],
     boolean:    [ true ],
     buffer:     [ Buffer.from('test') ],
@@ -33,6 +33,7 @@ describe('Check', function(){
     exception:  [ new Exception() ],
     finite:     [ 5 ],
     function:   [ ()=> true ],
+    integer:    [ 1 ],
     nan:        [ NaN ],
     number:     [ 2 ],
     object:     [ {} ],
@@ -51,8 +52,9 @@ describe('Check', function(){
     notEmpty:   [ ['test'] ],
     undefined:  [ undefined ],
     defined:    [ 'str' ],
+  }
+  const ok_test_checks = {
     length:     [ 'testing', 7, 8 ],
-    integer:    [ 1 ],
     range:      [ 5, 5, 5 ],
     between:    [ 5, 4, 6 ],
     strinteger: [ '53' ],
@@ -70,15 +72,20 @@ describe('Check', function(){
     //false:      [], // this will always false
   }
 
-  describe('type ok tests', function(){
-    Object.keys(ok_tests).forEach(key => {
-      it(`should pass test for ${key}`, function(){
-        expect( Checks.all[key].test.apply(null, ok_tests[key]), key).to.be.ok
+  describe('ok tests', function(){
+    Object.keys(ok_test_types).forEach(key => {
+      it(`should pass test for type ${key}`, function(){
+        expect( Checks.types[key].test.apply(null, ok_test_types[key]), key).to.be.ok
+      })
+    })
+    Object.keys(ok_test_checks).forEach(key => {
+      it(`should pass test for check ${key}`, function(){
+        expect( Checks.all[key].test.apply(null, ok_test_checks[key]), key).to.be.ok
       })
     })
   })
 
-  const err_tests = {
+  const err_type_tests = {
     array:      [ {} ],
     boolean:    [ '' ],
     buffer:     [ '' ],
@@ -88,6 +95,7 @@ describe('Check', function(){
     exception:  [ new Error() ],
     finite:     [ '' ],
     function:   [ '' ],
+    integer:    [ '1' ],
     nan:        [ 'NaN' ],
     number:     [ '' ],
     object:     [ '' ],
@@ -106,8 +114,9 @@ describe('Check', function(){
     notEmpty:   [ [] ],
     undefined:  [ '' ],
     defined:    [ undefined ],
+  }
+  const err_check_tests = {
     length:     [ 'testing', 8 ],
-    integer:    [ '1' ],
     range:      [ 5, 6, 7 ],
     between:    [ 5, 5, 6 ],
     strinteger: [ '53a' ],
@@ -125,10 +134,15 @@ describe('Check', function(){
     false:      [], // this will always false
   }
 
-  describe('type error tests', function(){
-    Object.keys(err_tests).forEach(key => {
-      it(`should fail test for ${key}`, function(){
-        expect( Checks.all[key].test.apply(null, err_tests[key]), key).to.be.false
+  describe('error tests', function(){
+    Object.keys(err_type_tests).forEach(key => {
+      it(`should fail type test for ${key}`, function(){
+        expect( Checks.types[key].test.apply(null, err_type_tests[key]), key).to.be.false
+      })
+    })
+    Object.keys(err_check_tests).forEach(key => {
+      it(`should fail check test for ${key}`, function(){
+        expect( Checks.all[key].test.apply(null, err_check_tests[key]), key).to.be.false
       })
     })
   })
