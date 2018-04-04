@@ -93,6 +93,50 @@ This is loaded as <code>validate_config</code> into the <code>Validate</code> cl
 
 **Kind**: global class  
 
+* [Checks](#Checks)
+    * [.addType()](#Checks.addType)
+    * [.addCheck()](#Checks.addCheck)
+    * [.resetTypes()](#Checks.resetTypes)
+    * [.resetChecks()](#Checks.resetChecks)
+    * [.compileObjectTemplate(str, options)](#Checks.compileObjectTemplate) ⇒ <code>function</code>
+
+
+* * *
+
+<a name="Checks.addType"></a>
+
+### Checks.addType()
+<p>Add custom type to config</p>
+
+**Kind**: static method of [<code>Checks</code>](#Checks)  
+
+* * *
+
+<a name="Checks.addCheck"></a>
+
+### Checks.addCheck()
+<p>Add custom type to config</p>
+
+**Kind**: static method of [<code>Checks</code>](#Checks)  
+
+* * *
+
+<a name="Checks.resetTypes"></a>
+
+### Checks.resetTypes()
+<p>Reset all types back to source</p>
+
+**Kind**: static method of [<code>Checks</code>](#Checks)  
+
+* * *
+
+<a name="Checks.resetChecks"></a>
+
+### Checks.resetChecks()
+<p>Reset all checks back to source</p>
+
+**Kind**: static method of [<code>Checks</code>](#Checks)  
+
 * * *
 
 <a name="Checks.compileObjectTemplate"></a>
@@ -192,7 +236,7 @@ processing.</p>
 <a name="FieldConfig+argument_names"></a>
 
 ### fieldConfig.argument_names : <code>Array.&lt;String&gt;</code>
-<p>The checks configured argument names</p>
+<p>The checks configured argument names (from <code>Checks</code> and <code>check_*</code>)</p>
 
 **Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
 
