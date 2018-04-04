@@ -3,10 +3,12 @@
 <dl>
 <dt><a href="#CheckField">CheckField</a></dt>
 <dd><p>The definition for a single field</p></dd>
+<dt><a href="#CheckFieldCheck">CheckFieldCheck</a></dt>
+<dd><p>Check a field that run a generic method with multiple arguments</p></dd>
 <dt><a href="#CheckFieldExists">CheckFieldExists</a></dt>
 <dd><p>The definition for a single field</p></dd>
-<dt><a href="#CheckFieldMethod">CheckFieldMethod</a></dt>
-<dd><p>Check a field that run a generic method with multiple arguments</p></dd>
+<dt><a href="#CheckFieldItems">CheckFieldItems</a></dt>
+<dd><p>Check a collection</p></dd>
 <dt><a href="#CheckFieldType">CheckFieldType</a></dt>
 <dd><p>Check the type of a field</p></dd>
 <dt><a href="#Checks">Checks</a></dt>
@@ -46,6 +48,15 @@ This is loaded as <code>validate_config</code> into the <code>Validate</code> cl
 
 * * *
 
+<a name="CheckFieldCheck"></a>
+
+## CheckFieldCheck
+<p>Check a field that run a generic method with multiple arguments</p>
+
+**Kind**: global class  
+
+* * *
+
 <a name="CheckFieldExists"></a>
 
 ## CheckFieldExists
@@ -55,10 +66,10 @@ This is loaded as <code>validate_config</code> into the <code>Validate</code> cl
 
 * * *
 
-<a name="CheckFieldMethod"></a>
+<a name="CheckFieldItems"></a>
 
-## CheckFieldMethod
-<p>Check a field that run a generic method with multiple arguments</p>
+## CheckFieldItems
+<p>Check a collection</p>
 
 **Kind**: global class  
 
@@ -112,7 +123,8 @@ processing.</p>
 
 * [FieldConfig](#FieldConfig)
     * [.type](#FieldConfig+type)
-    * [.test](#FieldConfig+test) : <code>function</code>
+    * [.type_test](#FieldConfig+type_test) : <code>function</code>
+    * [.check_test](#FieldConfig+check_test) : <code>function</code>
     * [.required](#FieldConfig+required) : <code>Boolean</code>
     * [.label](#FieldConfig+label) : <code>String</code>
     * [.args](#FieldConfig+args) : <code>Array</code>
@@ -131,10 +143,19 @@ processing.</p>
 
 * * *
 
-<a name="FieldConfig+test"></a>
+<a name="FieldConfig+type_test"></a>
 
-### fieldConfig.test : <code>function</code>
-<p>The test function for this check</p>
+### fieldConfig.type_test : <code>function</code>
+<p>The type test function for this check</p>
+
+**Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
+
+* * *
+
+<a name="FieldConfig+check_test"></a>
+
+### fieldConfig.check_test : <code>function</code>
+<p>The check function for this check</p>
 
 **Kind**: instance property of [<code>FieldConfig</code>](#FieldConfig)  
 
