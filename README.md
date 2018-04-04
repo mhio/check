@@ -14,7 +14,28 @@ npm i @mhio/check --save
 ### Usage
 ```
 import { Check } from '@mhio/check'
-
+let checkFn = Check.generate({
+  first_name: {
+    label: "First Name",
+    check: 'length',
+    args: [ 1, 64 ],
+  },
+  last_name: {
+    label: "Last Name",
+    check: 'length',
+    args: [ 1, 96 ],
+  }
+  size: {
+    label: "Size",
+    type: 'integer' 
+  }
+})
+const some_data = {
+  first_name: 'Jimmy',
+  last_name: 'Stewart',
+  size: 42,
+}
+fn(some_data)
 ```
 
 ### Links
