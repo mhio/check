@@ -20,7 +20,7 @@ export class CheckFieldExists {
         if ( required === false ) return false // short circuit checks
         throw new exception(
           `${exception_prefix}No property "${field_name}" in data for "${label}"`,
-          { detail: { from: config_source } }
+          { field: field_name, check: 'exists', from: config_source }
         )
       }
       return incoming_data

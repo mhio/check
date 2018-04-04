@@ -62,4 +62,20 @@ describe('CheckFailed', function(){
     expect( new CheckFailed('message') ).to.instanceof(CheckFailed)
   })
 
+  it('should create a new instance', function(){
+    expect( new CheckFailed('message', { field: 'afield'}).field ).to.equal('afield')
+  })
+
+  it('should create a new instance', function(){
+    expect( new CheckFailed('message', { check: 'acheck'}).check ).to.equal('acheck')
+  })
+
+  it('should create a new instance', function(){
+    expect( new CheckFailed('message', { check: 'acheck'}).label ).to.equal('Check Failed')
+  })
+
+  it('should create a new instance', function(){
+    expect( new CheckFailed('message', { label: 'Some other'}).label ).to.equal('Some other')
+  })
+
 })

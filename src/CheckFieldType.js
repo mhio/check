@@ -28,16 +28,16 @@ export class CheckFieldType {
       let res = typeTest(incoming_data[field_name])
       if ( res !== true ) {
         let message_props = {
-          from: config_source,
-          name: field_name,
-          type: typeof incoming_data[field_name]
+          value:  incoming_data[field_name],
+          name:   field_name,
+          type:   typeof incoming_data[field_name]
         }
         // Allow varible name for the value
         message_props.value = incoming_data[field_name]
         let test_message = type_messageFn(message_props)
         throw new exception(
           `${exception_prefix}${label} failed the ${field_test_type} check: ${test_message}`,
-          { detail: message_props }
+          { field: field_name, check: field_test_type, from: config_source, detail: message_props },
         )
       }
       return incoming_data

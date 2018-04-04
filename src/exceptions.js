@@ -35,11 +35,45 @@ class CheckException extends Exception {
       * @type String
       */
       this.from = metadata.from
+
+
     }
   }
 
 }
 
-class CheckFailed extends CheckException {}
+class CheckFailed extends CheckException {
+
+  possiblyQuote(string){
+    return (string)
+      ? `"${string}" `
+      : ''
+  }
+
+  constructor( message, metadata = {} ){
+    super(message, metadata)
+
+    /** 
+    * The name of the field being checked
+    * @type String
+    */
+    this.field = metadata.field
+
+    /** 
+    * The name of the check involved
+    * @type String
+    */
+    this.check = metadata.check
+
+    if (!this.label) {
+      this.label = 'Check Failed'
+    }
+    if (!this.simple) {
+      let field = this.possiblyQuote(this.field)
+      let check = this.possiblyQuote(this.check)
+      this.simple = `The ${field}field failed the ${check}check`
+    }
+  }
+}
 
 export { CheckException, CheckFailed, Exception }

@@ -42,9 +42,10 @@ export class CheckFieldCheck {
       let res = testFn(incoming_data[field_name], ...test_args)
       if ( res !== true ) {
         let message_props = {
-          from: config_source,
-          name: field_name,
-          type: typeof incoming_data[field_name]
+          value:  incoming_data[field_check_name],
+          name:   field_name,
+          check:  field_check_name,
+          type:   typeof incoming_data[field_name]
         }
         // Allow varible name for the value
         message_props[value_name] = incoming_data[field_name]
@@ -57,9 +58,9 @@ export class CheckFieldCheck {
 
         let test_message = check_messageFn(message_props)
         throw new exception(
-          `${exception_prefix}${label} failed the ${field_check_name} check: ${test_message}`, {
-          detail: message_props
-        })
+          `${exception_prefix}${label} failed the ${field_check_name} check: ${test_message}`,
+          { field: field_name, check: field_check_name, from: config_source }
+        )
       }
       return incoming_data
     }
