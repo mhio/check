@@ -1,5 +1,5 @@
 const debugr = require('debug')
-const debug = debugr('mhio:check:Check')
+const debug = debugr('mhio:check:CheckField')
 
 const { CheckException, CheckFailed, Exception } = require('./exceptions')
 export { CheckFailed, CheckException, Exception }
@@ -37,6 +37,7 @@ export class CheckField extends FieldConfig {
   buildFunction(){
     let exception = this.exception
     let checks_array = this.checks_array
+    let field_name = this.field_name
     debug('building check field function', this.checks_array)
 
     checks_array.push( CheckFieldExists.buildFunction(this) )
@@ -48,7 +49,7 @@ export class CheckField extends FieldConfig {
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
         let res = checkAllFn(incoming_data)
-        debug('check field result', res)
+        debug('check field result for "%s"', field_name, res)
         if ( res === false ) break // short circuit tests for this field
       }
 

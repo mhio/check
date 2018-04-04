@@ -65,7 +65,7 @@ class Check {
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
         let res = checkAllFn(incoming_data)
-        debug('check result for', checkAllFn.field_name, res)
+        debug('check result for "%s"', checkAllFn.field_name, res)
       }
 
       // Return the incoming_data in case of modification
