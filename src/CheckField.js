@@ -43,7 +43,7 @@ export class CheckField extends FieldConfig {
     //if ( this.type ) checks_array.push( CheckFieldType.buildFunction(this) )
     if ( this.type ) checks_array.push( CheckFieldMethod.buildFunction(this) )
 
-    return this.function = function(incoming_data){
+    this.function = function(incoming_data){
       if (!incoming_data) throw new exception('No object was passed in to run checks against')
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
@@ -55,6 +55,10 @@ export class CheckField extends FieldConfig {
       // Return the incoming_data in case of modification
       return incoming_data
     }
+
+    this.function._instance = this
+    this.function.field_name = this.field_name
+    return this.function
   }
 
 }
