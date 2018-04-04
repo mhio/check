@@ -54,17 +54,20 @@ export class CheckField extends FieldConfig {
     debug('exception is try to set', value)
     if ( !value ){
       throw new CheckException('The custom exception must have a value', {
-        detail: { value: value }
+        detail: { value: value },
+        from: this.config_source,
       })
     }
     if ( !value.prototype ){
       throw new CheckException('The custom exception must be a constructor with a prototype', {
-        detail: { value: value }
+        detail: { value: value },
+        from: this.config_source,
       })
     }
     if ( value !== Error && value.prototype instanceof Error !== true ){
       throw new CheckException('The custom exception must be an instance of Error', {
-        detail: { value: value }
+        detail: { value: value },
+        from: this.config_source,
       })
     }
     this._exception = value
