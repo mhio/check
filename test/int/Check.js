@@ -306,8 +306,6 @@ describe('Integration::mhio::Check', function(){
         expect( ()=> chk({ io: 'wat' })).to.throw(/is not an instance of undefined/)
       })
 
-
-
     })
 
 
@@ -395,6 +393,24 @@ describe('Integration::mhio::Check', function(){
       it('should fail with an arg of unedefined', function(){
         let chk = Check.generate({ fields: { len: { check: 'length', args: [undefined] }} })
         expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length or a min and max/)
+      })
+
+    })
+
+    describe('true', function(){
+
+      it('should fail with no args', function(){
+        let fn = Check.generate({ fields: { len: { check: 'true' }} })
+        expect( fn({ len: true }) ).to.be.ok
+      })
+
+    })
+
+    describe('false', function(){
+
+      it('should fail with no args', function(){
+        let chk = Check.generate({ fields: { len: { check: 'false' }} })
+        expect( ()=> chk({ len: true }) ).to.throw(/^len failed the false check: testing false$/)
       })
 
     })

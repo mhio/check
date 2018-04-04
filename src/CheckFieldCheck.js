@@ -13,12 +13,12 @@ export { CheckFailed, CheckException, Exception }
 export class CheckFieldCheck {
 
   static buildFunction( field ){
-    let { field_name, label, config_source, exception, check_messageFn, args, argument_names, requires_arguments, check } = field
+    let { field_name, label, config_source, exception, check_messageFn, args, argument_names, requires_arguments, parent_check } = field
     let field_check_name = field.check
     let testFn = field.check_test
 
     // If there's an overall check label, use it for the exception
-    let exception_prefix = check.label_with_space
+    let exception_prefix = parent_check.label_with_space
 
     debug('CheckFieldCheck - prop[%s] label[%s] type[%s]', field_name, label, field_check_name, args, requires_arguments )
 

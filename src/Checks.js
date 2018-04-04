@@ -58,17 +58,19 @@ export class Checks {
     let arr = str.split(re)
     let end = arr.length
     let return_arr = new Array(arr.length)
-    let templateCompiledObject = function templateCompiledObject( params ){
-      for ( let i = 0; i < end; i+=3 ){
-        return_arr[i] = arr[i]
-        let p = params[arr[i+2]]
-        if ( p === undefined ) p = arr[i+1] // Leave {{param}} in there
-        return_arr[i+1] = p // 1600k
+    let templateCompiledObject = (arr.length === 1)
+      ? function templateCompiledObject(){ return str }
+      : function templateCompiledObject( params ){
+        for ( let i = 0; i < end; i+=3 ){
+          return_arr[i] = arr[i]
+          let p = params[arr[i+2]]
+          if ( p === undefined ) p = arr[i+1] // Leave {{param}} in there
+          return_arr[i+1] = p // 1600k
+        }
+        return return_arr.join('')
       }
-      return return_arr.join('')
-    }
-    templateCompiledObject.string = str
-    return templateCompiledObject
+      templateCompiledObject.string = str
+      return templateCompiledObject
   }
 
 }

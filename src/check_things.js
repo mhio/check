@@ -73,13 +73,13 @@ export const check_things = {
   true: { 
     args: [],
     test: ()=> true,
-    message: 'test true',
+    message: 'testing true',
     group: 'testing'
   },
   false: { 
     args: [],
     test: ()=> false,
-    message: 'test false',
+    message: 'testing false',
     group: 'testing'
   }
 
