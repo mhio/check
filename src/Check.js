@@ -15,7 +15,8 @@ class Check {
   }
 
   static generate( config, options = {} ){
-    if ( !options.config_source ) {
+    if (  !options.config_source ) {
+      // Create a stack, then grab the calling file/line
       options.config_source = CheckException.source(new Error())
     }
     let check = new Check(config, options)
@@ -23,18 +24,23 @@ class Check {
     return check.function
   }
 
-  constructor( config, options = {} ){
+  constructor( config, options ){
+    if ( options ) {
+      this.config_source = options.config_source
+      this.exception = options.exception
+    }
+
     this.checks = []
 
     this.config = config
-
-    this.config_source = options.config_source
-    this.exception = options.exception
-
   }
 
   set config(conf){
-    if ( !conf ) throw new CheckException('No Check config to generate function')
+    if ( !conf ) {
+      throw new CheckException('No Check config to generate function', {
+        from: this.config_source
+      })
+    }
 
     this.exception = conf.exception || CheckFailed
     this.label = conf.label || ''
@@ -60,9 +66,14 @@ class Check {
   buildFunction(){
     let exception = this.exception
     let checks_array = this.checks_array
+    let config_source = this.config_source
 
     return this.function = function(incoming_data){
-      if (!incoming_data) throw new exception('No object was passed in to run checks against')
+      if (!incoming_data) {
+        throw new exception('No object was passed in to run checks against', {
+          from: config_source
+        })
+      }
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
         let res = checkAllFn(incoming_data)

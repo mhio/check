@@ -36,9 +36,25 @@ export class FieldConfig {
   /** The type of this check (from [Checks] */
   get type(){ return this._type }
   set type( type_name ){
-    if (!type_name) throw new CheckException('No type to set for field config')
-    if (!Checks.types[type_name]) throw new CheckException(`No type "${type_name}" available for field "${this.field_name}"`)
+    if (!type_name) {
+      throw new CheckException('No type to set for field config', {
+        from: this.config_source
+      })
+    }
+    if (typeof type_name !== 'string') {
+      throw new CheckException(`Type definition must be a string. Recieved ${typeof type_name}`, {
+        from: this.config_source
+      })
+    }
+    if (!Checks.types[type_name]) {
+      throw new CheckException(`No type "${type_name}" available for field "${this.field_name}"`, {
+        from: this.config_source
+      })
+    }
+    
+    // Set the name, and lookup the details from `types`
     this._type = type_name
+    
     this.type_test = Checks.types[type_name].test
     this.type_messageFn = Checks.types[type_name].messageFn
   }
@@ -49,25 +65,51 @@ export class FieldConfig {
   */
   get type_test(){ return this._test }
   set type_test( testFn ){
+    if ( typeof testFn !== 'function' ){
+      throw new CheckException(`The type test for "${this.type_name}" must be a function`, {
+        from: this.config_source
+      })
+    }
     this._test = testFn
   }
 
   get type_messageFn() { return this._type_messageFn }
   set type_messageFn( msgFn ){
+    if ( typeof msgFn !== 'function' ){
+      throw new CheckException(`The type message for "${this.type_name}" must be a function`, {
+        from: this.config_source
+      })
+    }
     this._type_messageFn = msgFn
   }
 
 
   get check() { return this._check }
   set check( check_name ){
-    if (!check_name) throw new CheckException('No check to set for field config')
-    if (!Checks.all[check_name]) throw new CheckException(`No check "${check_name}" available for field "${this.field_name}"`)
+    if (!check_name) {
+      throw new CheckException('No check to set for field config')
+    }
+    if (typeof check_name !== 'string') {
+      throw new CheckException(`Check definition must be a string. Recieved ${typeof check_name}`, {
+        from: this.config_source
+      })
+    }
+    if (!Checks.all[check_name]) {
+      throw new CheckException(`No check "${check_name}" available for field "${this.field_name}"`, {
+        from: this.config_source
+      })
+    }
+    
+    // Set the name, and lookup the details from `all`
     this._check = check_name
+
     this._argument_names = Checks.all[check_name].args
-    debug('this._argument_names', this.check, this._argument_names, Checks.all[check_name])
+    debug('check argument_names', this._check, this._argument_names, Checks.all[check_name])
     this.requires_arguments = ( this._argument_names.length > 1 )
     this.check_test = Checks.all[check_name].test
     this.check_messageFn = Checks.all[check_name].messageFn
+
+    // Some checks also specify a type
     if (Checks.all[check_name].requires) this.type = Checks.all[check_name].requires
   }
 
@@ -77,11 +119,19 @@ export class FieldConfig {
   */
   get check_test(){ return this._test }
   set check_test( testFn ){
+    if ( typeof testFn !== 'function' ){
+      throw new CheckException(`The check test for "${this.type_name}" must be a function`)
+    }
     this._test = testFn
   }
 
   get check_messageFn() { return this._check_messageFn }
   set check_messageFn( msgFn ){
+    if ( typeof msgFn !== 'function' ){
+      throw new CheckException(`The check message for "${this.type_name}" must be a function`, {
+        from: this.config_source
+      })
+    }
     this._check_messageFn = msgFn
   }
 
@@ -120,7 +170,7 @@ export class FieldConfig {
   }
 
   /** 
-  * The checks configured argument names
+  * The checks configured argument names (from `Checks` and `check_*`)
   * @type String[]
   */
   get argument_names(){

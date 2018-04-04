@@ -47,7 +47,7 @@ export const check_things = {
     test: ( value, min, max ) => {
       debug('length - value[%s]  min[%s]  max[%s]', value, min, max)
       if ( min === undefined ) {
-        throw new CheckFailed('The length check requires a single length or a min and max')
+        throw new CheckFailed('The length check requires a single length argument or a min and max')
       }
       if ( max === undefined ) {
         max = min

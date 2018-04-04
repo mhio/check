@@ -346,7 +346,7 @@ describe('Integration::mhio::Check', function(){
 
       it('should fail with an arg of undefined', function(){
         let chk = Check.generate({ fields: { len: { check: 'length', args: [undefined] }} })
-        expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length or a min and max/)
+        expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length argument or a min and max/)
       })
 
     })
@@ -392,7 +392,7 @@ describe('Integration::mhio::Check', function(){
 
       it('should fail with an arg of unedefined', function(){
         let chk = Check.generate({ fields: { len: { check: 'length', args: [undefined] }} })
-        expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length or a min and max/)
+        expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length argument or a min and max/)
       })
 
     })
