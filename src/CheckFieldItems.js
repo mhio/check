@@ -27,21 +27,23 @@ export class CheckFieldItems {
     return function checkPropertyItems(incoming_data){
       debug('incoming_data', incoming_data, field_name)
       
-      let res = test_function(incoming_data[field_name])
-      if ( res !== true ) {
-        let message_props = {
-          from: config_source,
-          name: field_name,
-          type: typeof incoming_data[field_name]
+      forEach(incoming_data, data => {
+        let res = test_function(data)
+        if ( res !== true ) {
+          let message_props = {
+            from: config_source,
+            name: field_name,
+            type: typeof data
+          }
+          // Allow varible name for the value
+          message_props[value_arg_name] = data
+          let test_message = messageFn(message_props)
+          throw new exception(
+            `${exception_prefix}${label} failed the ${field_test_type} check: ${test_message}`,
+            { detail: message_props }
+          )
         }
-        // Allow varible name for the value
-        message_props[value_arg_name] = incoming_data[field_name]
-        let test_message = messageFn(message_props)
-        throw new exception(
-          `${exception_prefix}${label} failed the ${field_test_type} check: ${test_message}`,
-          { detail: message_props }
-        )
-      }
+      })
       return incoming_data
     }
 
