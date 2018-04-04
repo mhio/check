@@ -335,19 +335,19 @@ describe('Integration::mhio::Check', function(){
         expect( fn  ).to.throw(/no args supplied in config/i)
       })
 
-      it('should fail with an arg of unedefined', function(){
+      it('should fail with an arg of undefined', function(){
         let chk = Check.generate({ fields: { len: { type: 'length', args: [undefined] }} })
-        expect( ()=> chk({ len: 'test' }) ).to.throw(/The length check requires a length argument/)
+        expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length or a min and max/)
       })
 
     })
 
-    describe('length_range 7 -> 8', function(){
+    describe('length range 7 -> 8', function(){
 
       let chk 
 
       before(function(){
-        chk = Check.generate({ fields: { len: { type: 'length_range', args: [ 7, 8 ]}} })
+        chk = Check.generate({ fields: { len: { type: 'length', args: [ 7, 8 ]}} })
         debug(chk)
       })
         
@@ -369,21 +369,21 @@ describe('Integration::mhio::Check', function(){
 
     })
 
-    describe('length_range bad', function(){
+    describe('length range bad', function(){
 
       it('should fail with no args', function(){
-        let fn = ()=> Check.generate({ fields: { len: { type: 'length_range' }} })
+        let fn = ()=> Check.generate({ fields: { len: { type: 'length' }} })
         expect( fn ).to.throw(/no args supplied in config/i)
       })
 
       it('should fail with args undefined', function(){
-        let fn = ()=> Check.generate({ fields: { len: { type: 'length_range', args: undefined }} })
+        let fn = ()=> Check.generate({ fields: { len: { type: 'length', args: undefined }} })
         expect( fn  ).to.throw(/no args supplied in config/i)
       })
 
       it('should fail with an arg of unedefined', function(){
-        let chk = Check.generate({ fields: { len: { type: 'length_range', args: [undefined] }} })
-        expect( ()=> chk({ len: 'test' }) ).to.throw(/The length_range check requires a min, max/)
+        let chk = Check.generate({ fields: { len: { type: 'length', args: [undefined] }} })
+        expect( ()=> chk({ len: 'test' }) ).to.throw(/length check requires a single length or a min and max/)
       })
 
     })
