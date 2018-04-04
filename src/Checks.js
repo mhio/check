@@ -3,8 +3,11 @@
 import forEach from 'lodash/forEach'
 import reduce from 'lodash/reduce'
 import assign from 'lodash/assign'
+import noop from 'lodash/noop'
 import debugr from 'debug'
-const debug = debugr('mhio:check:Checks')
+const _debug = debugr('mhio:check:Checks')
+/* istanbul ignore next */
+const debug = (_debug.enabled) ? _debug : noop
 
 import { CheckException, CheckFailed, Exception } from './exceptions'
 import { check_types } from './check_types'

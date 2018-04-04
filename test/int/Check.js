@@ -297,6 +297,17 @@ describe('Integration::mhio::Check', function(){
         expect( ()=> chk({ io: {} })).to.throw(/is not an instance of Array/)
       })
 
+      it('should fail to check Array when not an object', function(){
+        expect( ()=> chk({ io: undefined })).to.throw(/is not an instance of Array/)
+      })
+
+      it('should fail to check when type is undefined', function(){
+        chk = Check.generate({ fields: { io: { check: 'instanceof', args: [ undefined ] }} })
+        expect( ()=> chk({ io: 'wat' })).to.throw(/is not an instance of undefined/)
+      })
+
+
+
     })
 
 

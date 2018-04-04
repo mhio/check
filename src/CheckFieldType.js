@@ -1,7 +1,7 @@
 import noop from 'lodash/noop'
-
 import debugr from 'debug'
 const _debug = debugr('mhio:check:CheckFieldType')
+/* istanbul ignore next */
 let debug = (_debug.enabled) ? _debug : noop
 
 import { CheckException, CheckFailed, Exception } from './exceptions'
@@ -43,10 +43,6 @@ export class CheckFieldType {
       return incoming_data
     }
 
-  }
-
-  constructor(field){
-    this.field = field
   }
 
 }

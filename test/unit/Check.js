@@ -44,10 +44,26 @@ describe('Check', function(){
       expect( Check.generate({ fields:{ 'atestf': 'string' } }) ).to.be.a('function')
     })
 
-    it('should faile to set up with a bad type', function(){
-      let cfg = { fields:{ 'btestf': { type: undefined } } }
+    it('should fail to set up with a bad type', function(){
+      let cfg = { fields:{ 'eea': { type: undefined } } }
       expect( ()=> Check.generate(cfg) ).to.throw(/No type to set for field config/)
     })
+
+    it('should fail to set up with a unknown type', function(){
+      let cfg = { fields:{ 'eeb': { type: 'unk' } } }
+      expect( ()=> Check.generate(cfg) ).to.throw(/No type "unk" available/)
+    })
+
+    it('should fail to set up with a bad type', function(){
+      let cfg = { fields:{ 'eec': { check: undefined } } }
+      expect( ()=> Check.generate(cfg) ).to.throw(/No check to set for field config/)
+    })
+
+    it('should fail to set up with a bad type', function(){
+      let cfg = { fields:{ 'eed': { check: 'unk' } } }
+      expect( ()=> Check.generate(cfg) ).to.throw(/No check "unk" available/)
+    })
+
 
   })
 

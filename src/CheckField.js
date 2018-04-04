@@ -9,7 +9,7 @@ const { FieldConfig } = require('./FieldConfig')
 const { CheckFieldExists } = require('./CheckFieldExists')
 const { CheckFieldType } = require('./CheckFieldType')
 const { CheckFieldCheck } = require('./CheckFieldCheck')
-const { CheckFieldItems } = require('./CheckFieldItems')
+//const { CheckFieldItems } = require('./CheckFieldItems')
 
 
 /** The definition for a single field */
@@ -41,14 +41,14 @@ export class CheckField extends FieldConfig {
     let field_name = this.field_name
     let field_type = this.type
     let field_check = this.check
-    let field_items = this.items
+    //let field_items = this.items
     debug('building check field function', this.checks_array)
 
     checks_array.push( CheckFieldExists.buildFunction(this) )
     //if ( this.type ) checks_array.push( CheckFieldType.buildFunction(this) )
     if ( field_type ) checks_array.push( CheckFieldType.buildFunction(this) )
     if ( field_check ) checks_array.push( CheckFieldCheck.buildFunction(this) )
-    if ( field_items ) checks_array.push( CheckFieldItems.buildFunction(this) )
+    //if ( field_items ) checks_array.push( CheckFieldItems.buildFunction(this) )
 
     this.function = function(incoming_data){
       if (!incoming_data) throw new exception('No object was passed in to run checks against')

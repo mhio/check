@@ -2,6 +2,7 @@ import forEach  from 'lodash/forEach'
 import noop  from 'lodash/noop'
 import debugr from 'debug'
 const _debug = debugr('mhio:check:CheckFieldCheck')
+/* istanbul ignore next */
 const debug = (_debug.enabled) ? _debug : noop
 
 import { CheckException, CheckFailed, Exception } from './exceptions'
@@ -12,7 +13,7 @@ export { CheckFailed, CheckException, Exception }
 export class CheckFieldCheck {
 
   static buildFunction( field ){
-    let { field_name, label, config_source, exception, checkMessageFn, args, argument_names, requires_arguments, check } = field
+    let { field_name, label, config_source, exception, check_messageFn, args, argument_names, requires_arguments, check } = field
     let field_check_name = field.check
     let testFn = field.check_test
 
@@ -35,7 +36,7 @@ export class CheckFieldCheck {
     let extra_param_names = argument_names.slice(1)
 
 
-    return function checkPropertyType(incoming_data){
+    return function checkProperty(incoming_data){
       debug('incoming_data [%s] reqargs[%s]', field_name, requires_arguments, incoming_data)
       
       let res = testFn(incoming_data[field_name], ...test_args)
@@ -54,7 +55,7 @@ export class CheckFieldCheck {
         // Check config describes names or args in `.args`, shift `value`.
         // user check config describes values of args in an array
 
-        let test_message = checkMessageFn(message_props)
+        let test_message = check_messageFn(message_props)
         throw new exception(
           `${exception_prefix}${label} failed the ${field_check_name} check: ${test_message}`, {
           detail: message_props

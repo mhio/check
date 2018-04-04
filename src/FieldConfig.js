@@ -43,6 +43,21 @@ export class FieldConfig {
     this.type_messageFn = Checks.types[type_name].messageFn
   }
 
+  /** 
+  * The type test function for this check 
+  * @type Function
+  */
+  get type_test(){ return this._test }
+  set type_test( testFn ){
+    this._test = testFn
+  }
+
+  get type_messageFn() { return this._type_messageFn }
+  set type_messageFn( msgFn ){
+    this._type_messageFn = msgFn
+  }
+
+
   get check() { return this._check }
   set check( check_name ){
     if (!check_name) throw new CheckException('No check to set for field config')
@@ -52,18 +67,24 @@ export class FieldConfig {
     debug('this._argument_names', this.check, this._argument_names, Checks.all[check_name])
     this.requires_arguments = ( this._argument_names.length > 1 )
     this.check_test = Checks.all[check_name].test
-    this.checkMessageFn = Checks.all[check_name].messageFn
+    this.check_messageFn = Checks.all[check_name].messageFn
     if (Checks.all[check_name].requires) this.type = Checks.all[check_name].requires
   }
 
   /** 
-  * The test function for this check 
+  * The check function for this check 
   * @type Function
   */
-  get test(){ return this._test }
-  set test( testFn ){
+  get check_test(){ return this._test }
+  set check_test( testFn ){
     this._test = testFn
   }
+
+  get check_messageFn() { return this._check_messageFn }
+  set check_messageFn( msgFn ){
+    this._check_messageFn = msgFn
+  }
+
 
   /** 
   * Is this field required 
@@ -74,10 +95,6 @@ export class FieldConfig {
     this._required = Boolean(bool)
   }
 
-  get messageFn() { return this._messageFn }
-  set messageFn( msgFn ){
-    this._messageFn = msgFn
-  }
 
   /** 
   * A human label for this field 

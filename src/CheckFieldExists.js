@@ -1,6 +1,7 @@
-import debugr from 'debug'
-const debug = debugr('mhio:check:CheckFieldExists')
-
+const noop = require('lodash/noop')
+const _debug = require('debug')('mhio:check:CheckFieldExists')
+/* istanbul ignore next */
+const debug = (_debug.enabled) ? _debug : noop
 
 /** The definition for a single field */
 export class CheckFieldExists {
@@ -24,10 +25,6 @@ export class CheckFieldExists {
       }
       return incoming_data
     }
-  }
-
-  constructor(field){
-    this.field = field
   }
 
 }

@@ -19,8 +19,11 @@ export const check_things = {
       return ( object instanceof cls )
     },
     //message: '{{object}} is not an instance of {{cls}}',
-    messageFn: (p)=> `${p.object} is not an instance of ${p.cls.name}`,
-    requires: [ 'object' ],
+    messageFn: (p)=> {
+      let name = (p.cls) ? p.cls.name : p.cls
+      return `${p.object} is not an instance of ${name}`
+    },
+    //requires: [ 'object' ],
   },
 
   // length: {
