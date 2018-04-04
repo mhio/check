@@ -36,7 +36,7 @@ export class CheckFieldMethod {
 
 
     return function checkPropertyType(incoming_data){
-      debug('incoming_data', incoming_data, field_name, requires_arguments)
+      debug('incoming_data [%s] reqargs[%s]', field_name, requires_arguments, incoming_data)
       
       let res = testFn(incoming_data[field_name], ...test_args)
       if ( res !== true ) {
