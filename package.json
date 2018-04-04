@@ -1,6 +1,6 @@
 {
   "name": "@mhio/check",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Check JS types",
   "main": "lib/index.js",
   "scripts": {
