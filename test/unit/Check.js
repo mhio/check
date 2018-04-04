@@ -50,7 +50,7 @@ describe('Check', function(){
 
     it('should fail to set up with a bad type', function(){
       let cfg = { fields:{ 'eea': { type: undefined } } }
-      expect( ()=> Check.generate(cfg) ).to.throw(/No type to set for field config/)
+      expect( ()=> Check.generate(cfg) ).to.throw(/Type definition must be a string/)
     })
 
     it('should fail to set up with a unknown type', function(){
@@ -60,7 +60,7 @@ describe('Check', function(){
 
     it('should fail to set up with a bad type', function(){
       let cfg = { fields:{ 'eec': { check: undefined } } }
-      expect( ()=> Check.generate(cfg) ).to.throw(/No check to set for field config/)
+      expect( ()=> Check.generate(cfg) ).to.throw(/Check definition must be a string/)
     })
 
     it('should fail to set up with a bad type', function(){

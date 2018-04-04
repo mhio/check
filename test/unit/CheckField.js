@@ -61,6 +61,11 @@ describe('CheckField', function(){
       expect( ()=> chk.exception = NotAnError ).to.throw(/The custom exception must be an instance of Error/)
     })
 
+    it('should set a config_source on creation', function(){
+      chk = new CheckField('name', { config_source: '1.js:15' }, {})
+      expect( chk.config_source ).to.equal( '1.js:15' )
+    })
+
   })
 
 })

@@ -36,13 +36,8 @@ export class FieldConfig {
   /** The type of this check (from [Checks] */
   get type(){ return this._type }
   set type( type_name ){
-    if (!type_name) {
-      throw new CheckException('No type to set for field config', {
-        from: this.config_source
-      })
-    }
     if (typeof type_name !== 'string') {
-      throw new CheckException(`Type definition must be a string. Recieved ${typeof type_name}`, {
+      throw new CheckException(`Type definition must be a string. Recieved "${typeof type_name}"`, {
         from: this.config_source
       })
     }
@@ -66,7 +61,8 @@ export class FieldConfig {
   get type_test(){ return this._test }
   set type_test( testFn ){
     if ( typeof testFn !== 'function' ){
-      throw new CheckException(`The type test for "${this.type_name}" must be a function`, {
+      throw new CheckException(`The type test for "${this.field_name}" must be a function`, {
+        detail: { value: testFn },
         from: this.config_source
       })
     }
@@ -76,8 +72,9 @@ export class FieldConfig {
   get type_messageFn() { return this._type_messageFn }
   set type_messageFn( msgFn ){
     if ( typeof msgFn !== 'function' ){
-      throw new CheckException(`The type message for "${this.type_name}" must be a function`, {
-        from: this.config_source
+      throw new CheckException(`The type message for "${this.field_name}" must be a function`, {
+        detail: { value: msgFn },
+        from: this.config_source,
       })
     }
     this._type_messageFn = msgFn
@@ -86,16 +83,18 @@ export class FieldConfig {
 
   get check() { return this._check }
   set check( check_name ){
-    if (!check_name) {
-      throw new CheckException('No check to set for field config')
-    }
+    // if (!check_name) {
+    //   throw new CheckException('A value muse be set for check')
+    // }
     if (typeof check_name !== 'string') {
-      throw new CheckException(`Check definition must be a string. Recieved ${typeof check_name}`, {
+      throw new CheckException(`Check definition must be a string. Recieved "${typeof check_name}"`, {
+        detail: { value: check_name },
         from: this.config_source
       })
     }
     if (!Checks.all[check_name]) {
       throw new CheckException(`No check "${check_name}" available for field "${this.field_name}"`, {
+        detail: { value: check_name },
         from: this.config_source
       })
     }
@@ -120,7 +119,7 @@ export class FieldConfig {
   get check_test(){ return this._test }
   set check_test( testFn ){
     if ( typeof testFn !== 'function' ){
-      throw new CheckException(`The check test for "${this.type_name}" must be a function`)
+      throw new CheckException(`The check test for "${this.field_name}" must be a function`)
     }
     this._test = testFn
   }
@@ -128,7 +127,7 @@ export class FieldConfig {
   get check_messageFn() { return this._check_messageFn }
   set check_messageFn( msgFn ){
     if ( typeof msgFn !== 'function' ){
-      throw new CheckException(`The check message for "${this.type_name}" must be a function`, {
+      throw new CheckException(`The check message for "${this.field_name}" must be a function`, {
         from: this.config_source
       })
     }
