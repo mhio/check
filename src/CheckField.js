@@ -38,18 +38,19 @@ export class CheckField extends FieldConfig {
     let exception = this.exception
     let checks_array = this.checks_array
     let field_name = this.field_name
+    let field_type = this.type
     debug('building check field function', this.checks_array)
 
     checks_array.push( CheckFieldExists.buildFunction(this) )
     //if ( this.type ) checks_array.push( CheckFieldType.buildFunction(this) )
-    if ( this.type ) checks_array.push( CheckFieldMethod.buildFunction(this) )
+    if ( field_type ) checks_array.push( CheckFieldMethod.buildFunction(this) )
 
     this.function = function(incoming_data){
       if (!incoming_data) throw new exception('No object was passed in to run checks against')
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
         let res = checkAllFn(incoming_data)
-        debug('check field result for "%s"', field_name, res)
+        debug('check field result for "%s" "%s"', field_name, field_type, res)
         if ( res === false ) break // short circuit tests for this field
       }
 
