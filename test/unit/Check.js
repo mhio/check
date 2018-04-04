@@ -18,8 +18,12 @@ describe('Check', function(){
       expect( Check.types ).to.be.ok
     })
 
-    it('should load', function(){
+    it('should load the CheckFailed exception', function(){
       expect( new CheckFailed() ).to.be.an.instanceof( Exception )
+    })
+
+    it('should load Check', function(){
+      expect( new Check({}) ).to.be.an.instanceof( Check )
     })
 
     it('should generate a check function', function(){

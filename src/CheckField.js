@@ -51,7 +51,7 @@ export class CheckField extends FieldConfig {
     //if ( field_items ) checks_array.push( CheckFieldItems.buildFunction(this) )
 
     this.function = function(incoming_data){
-      if (!incoming_data) throw new exception('No object was passed in to run checks against')
+      if (!incoming_data) throw new exception('No object was passed in to check the field against')
       for ( let i = 0; i < checks_array.length; i++ ) {
         let checkAllFn = checks_array[i]
         let res = checkAllFn(incoming_data)

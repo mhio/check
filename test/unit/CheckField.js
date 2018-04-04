@@ -24,4 +24,9 @@ describe('CheckField', function(){
     expect( new CheckField('name', {}, {}) ).to.instanceof(CheckField)
   })
 
+  it('should create a new instance', function(){
+    let chk = new CheckField('name', {}, {})
+    expect( chk.function ).to.throw(/No object was passed in to check the field against/)
+  })
+
 })
